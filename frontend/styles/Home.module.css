@@ -1,0 +1,80 @@
+.container {
+  display: flex;
+}
+
+/* 
+   RIGHT-SIDE NAVBAR
+   - Position fixed or absolute on the right
+   - Full viewport height
+   - Gradient background that fades from right to transparent on the left
+*/
+.navbar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100px; /* adjust to your preference */
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* center nav items vertically */
+  padding: 1rem;
+  z-index: 999; /* so it stays above main content */
+  background: linear-gradient(to left, #1f1f1f, rgba(31, 31, 31, 0)); 
+  /* 
+     This gradient starts with #1f1f1f on the right side 
+     and gradually fades to transparent on the left 
+  */
+}
+
+.navLinks {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 13rem;
+  margin: 0;
+  padding: 10px;
+  align-items: right; /* align nav items to the right */
+}
+
+.navItem {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.navItem:hover {
+  color: #000000;
+}
+
+/* 
+   MAIN CONTENT
+   - We'll add a right-side margin or padding so content
+     doesn't overlap behind the navbar 
+*/
+.main {
+  flex: 1;
+  padding: 2rem;
+  margin-right: 100px; /* same as navbar width for a simpler layout */
+}
+
+/* 
+   SECTION STYLING 
+   - For an "endless" scroll, each section can be full height 
+     or just as tall as needed. 
+*/
+.section {
+  min-height: 100vh; 
+  padding: 2rem;
+  border-bottom: 1px solid #ccc; /* subtle divider */
+  background-color: #fff;
+}
+
+.section:nth-of-type(even) {
+  background-color: #f9f9f9; /* alternate background for visual contrast */
+}
+
+.sectionTitle {
+  margin-bottom: 1rem;
+  font-size: 2rem;
+}
