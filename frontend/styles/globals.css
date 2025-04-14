@@ -99,3 +99,13 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Markdown link styling */
+.react-markdown a {
+  color: #2563eb; /* blue-600 */
+  text-decoration: underline;
+}
+
+.dark .react-markdown a {
+  color: #60a5fa; /* blue-400 */
+}

@@ -1,3 +1,6 @@
-# Welcome to My Page
+# Welcome to My Portfolio / Landing page
 
-This is the home section. Scroll down or use the nav links to explore! 
+Scroll down or use the nav links to explore! 
+
+`some small peeks into my life...`
+
