@@ -1,80 +1,130 @@
 .container {
   display: flex;
-}
-
-/* 
-   RIGHT-SIDE NAVBAR
-   - Position fixed or absolute on the right
-   - Full viewport height
-   - Gradient background that fades from right to transparent on the left
-*/
-.navbar {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 100px; /* adjust to your preference */
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center; /* center nav items vertically */
-  padding: 1rem;
-  z-index: 999; /* so it stays above main content */
-  background: linear-gradient(to left, #1f1f1f, rgba(31, 31, 31, 0)); 
-  /* 
-     This gradient starts with #1f1f1f on the right side 
-     and gradually fades to transparent on the left 
-  */
-}
-
-.navLinks {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 13rem;
-  margin: 0;
-  padding: 10px;
-  align-items: right; /* align nav items to the right */
-}
-
-.navItem {
-  color: #fff;
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.3s ease;
-}
-
-.navItem:hover {
-  color: #000000;
+  min-height: 100vh;
+  width: 100%;
 }
 
 /* 
    MAIN CONTENT
-   - We'll add a right-side margin or padding so content
-     doesn't overlap behind the navbar 
+   - Properly bound content area with max-width
+   - Add padding for sidebar space
 */
 .main {
   flex: 1;
-  padding: 2rem;
-  margin-right: 100px; /* same as navbar width for a simpler layout */
+  padding: 1rem;
+  max-width: calc(100% - 16rem); /* Account for sidebar width */
+  margin-left: auto; /* Push content to the right */
 }
 
 /* 
    SECTION STYLING 
-   - For an "endless" scroll, each section can be full height 
-     or just as tall as needed. 
+   - Properly bound sections with max-width
+   - Maintain full viewport height
+   - Add proper spacing and borders
 */
 .section {
-  min-height: 100vh; 
+  min-height: 100vh;
   padding: 2rem;
-  border-bottom: 1px solid #ccc; /* subtle divider */
-  background-color: #fff;
+  border-bottom: 1px solid var(--border);
+  background-color: var(--background);
+  max-width: 90%;
+  width: 100%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
 }
 
 .section:nth-of-type(even) {
-  background-color: #f9f9f9; /* alternate background for visual contrast */
+  background-color: var(--muted);
 }
 
 .sectionTitle {
+  margin-bottom: 1.5rem;
+  font-size: 3rem;
+  color: var(--foreground);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.section p {
+  max-width: 100%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+/* 
+   CODE BLOCK STYLING
+   - Proper padding and margins
+   - Monospace font for code
+   - Background color for better readability
+   - Proper text wrapping
+*/
+.section pre {
+  background-color: var(--muted);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.section code {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco', monospace;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--foreground);
+}
+
+.scrollIndicator {
+  position: absolute;
+  right: 2rem;
+  bottom: 2rem;
+  color: rgba(255, 255, 255, 0.6);
+  transition: color 0.3s ease;
+}
+
+.scrollIndicator:hover {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.scrollArrow {
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+.section h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: var(--foreground);
+  letter-spacing: -0.02em;
+}
+
+.section h2 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-bottom: 1.25rem;
+  color: var(--foreground);
+  letter-spacing: -0.02em;
+}
+
+.section h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
   margin-bottom: 1rem;
-  font-size: 2rem;
+  color: var(--foreground);
+  letter-spacing: -0.02em;
 }
