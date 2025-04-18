@@ -1,7 +1,5 @@
 # About Me
 
-
-### Joseph Madigan
 ```
 Former retail management professional leveraging strong interpersonal skills and leadership experience in my journey to software engineering. 
 After successfully managing operations and teams of 30+ at Cinemark, I've redirected my passion for problem-solving toward building innovative technical solutions.

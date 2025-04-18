@@ -39,6 +39,9 @@ const items: MenuItem[] = [
     title: "Home",
     url: "#home",
     icon: Home,
+    subItems: [
+      { title: "Contact", url: "#home" },
+    ],
   },
   {
     title: "About",
@@ -54,11 +57,6 @@ const items: MenuItem[] = [
       { title: "ReverbXR", url: "#projects-reverbxr" },
       { title: "WhatNext", url: "#projects-whatnext" },
     ],
-  },
-  {
-    title: "Contact",
-    url: "#contact",
-    icon: Settings,
   },
 ]
 

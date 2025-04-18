@@ -1,4 +1,4 @@
-# Welcome to My Portfolio / Landing page
+# Joseph Madigan
 
 Scroll down or use the nav links to explore! 
 

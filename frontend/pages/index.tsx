@@ -54,15 +54,8 @@ const ScrollIndicator = () => {
 
 // Input: Section content and ID
 // Output: Rendered section with markdown content
-const renderSection = (content: string, id: string) => {
-  if (id === 'contact') {
-    return (
-      <section id={id} className={styles.section}>
-        <Contact content={content} />
-      </section>
-    )
-  }
-  if (id === 'home') {
+const renderSection = (content: string, id: string, allSections?: {[key: string]: SectionContent}) => {
+  if (id === 'home' && allSections) {
     return (
       <section id={id} className={styles.section}>
         <div className="react-markdown">
@@ -93,7 +86,19 @@ const renderSection = (content: string, id: string) => {
             <CarouselNext />
           </Carousel>
         </div>
+        
+        <div className="mt-8 w-full max-w-md mx-auto">
+          <Contact content={allSections.contact.content} />
+        </div>
+        
         <ScrollIndicator />
+      </section>
+    )
+  }
+  if (id === 'contact') {
+    return (
+      <section id={id} className={styles.section}>
+        <Contact content={content} />
       </section>
     )
   }
@@ -148,7 +153,7 @@ const Home: NextPage<HomeProps> = ({ sections }) => {
         <main className={styles.main}>
           
           {/* Main sections */}
-          {renderSection(sections.home.content, "home")}
+          {renderSection(sections.home.content, "home", sections)}
           {renderSection(sections.about.content, "about")}
           
           {/* Projects section with nested sections */}
@@ -158,9 +163,6 @@ const Home: NextPage<HomeProps> = ({ sections }) => {
               renderProjectSection(name, content)
             ))}
           </section>
-          
-          {/* Contact section */}
-          {renderSection(sections.contact.content, "contact")}
         </main>
       </div>
     </SidebarProvider>
