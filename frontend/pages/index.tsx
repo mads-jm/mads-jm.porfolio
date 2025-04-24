@@ -180,7 +180,7 @@ const renderSection = (content: string, id: string, allSections?: {[key: string]
     return (
       <section id={id} className={styles.section}>
         <Contact content={content} />
-        <Image src="/divider.svg" alt="Section divider" width={1920} height={4} style={{ width: '100%', height: '4px', padding: '1rem 0' }} />
+        <Image src="/divider.svg" alt="Section divider" width={1920} height={4} style={{ width: '100%', height: '4px' }} />
       </section>
     )
   }
@@ -261,7 +261,7 @@ const renderProjectSection = (name: string, content: string, onImageClick?: (src
         </div>
         <h2>{name}</h2>
       </div>
-      <div className="react-markdown" style={{ padding: '0 1rem' }}>
+      <div className="react-markdown" style={{ padding: '-1rem 0' }}>
         <ReactMarkdown>{content}</ReactMarkdown>
       </div>
       <Image src="/divider.svg" alt="Section divider" width={1920} height={2} style={{ width: '100%', height: '2px' }} />
