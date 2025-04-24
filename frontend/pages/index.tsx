@@ -61,7 +61,7 @@ const ImageModal = ({ src, alt, onClose }: { src: string, alt: string, onClose: 
       className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center cursor-pointer"
       onClick={onClose}
     >
-      <div className="relative max-w-[90vw] max-h-[90vh]">
+      <div className="relative max-w-[90vw] max-h-[90vh] flex flex-col items-center gap-4">
         <Image
           src={src}
           alt={alt}
@@ -71,11 +71,14 @@ const ImageModal = ({ src, alt, onClose }: { src: string, alt: string, onClose: 
             width: 'auto',
             height: 'auto',
             maxWidth: '90vw',
-            maxHeight: '90vh',
+            maxHeight: '80vh',
             objectFit: 'contain'
           }}
           onClick={(e) => e.stopPropagation()}
         />
+        <div className="font-mono text-base px-4 py-2 rounded-lg" style={{ color: 'hsl(186 25% 66%)' }}>
+          {alt}
+        </div>
       </div>
     </div>
   )
@@ -145,10 +148,10 @@ const renderSection = (content: string, id: string, allSections?: {[key: string]
                 </div>
               </CarouselItem>
               <CarouselItem className="basis-1/3 flex justify-center pl-4">
-                <div className="cursor-pointer" onClick={() => onImageClick?.("https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjh0H571WYQRTd6qklsFrWe4cU3bC8MigLN7vA", "Desk")}>
+                <div className="cursor-pointer" onClick={() => onImageClick?.("https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjh0H571WYQRTd6qklsFrWe4cU3bC8MigLN7vA", "Bass Canyon")}>
                   <Image 
                     src="https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjh0H571WYQRTd6qklsFrWe4cU3bC8MigLN7vA" 
-                    alt="Desk" 
+                    alt="Bass Canyon" 
                     width={480} 
                     height={270} 
                     style={{ width: 'auto', height: '300px' }} 
