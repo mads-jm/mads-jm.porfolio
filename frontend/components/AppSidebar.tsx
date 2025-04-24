@@ -1,4 +1,5 @@
-import { Calendar, Home, Inbox, Music } from "lucide-react"
+import { Calendar, Home, Inbox, Music, Menu, X } from "lucide-react"
+import { useState, useEffect } from "react"
 
 import {
   Sidebar,
@@ -17,6 +18,14 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible"
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+  SheetClose,
+} from "@/components/ui/sheet"
 
 
 // Input: Menu item configuration
@@ -67,7 +76,7 @@ const items: MenuItem[] = [
 
 // Input: Menu item and its subitems
 // Output: Rendered menu item with nested structure
-const renderMenuItem = (item: MenuItem) => (
+const renderMenuItem = (item: MenuItem, isMobile: boolean) => (
   <SidebarMenuItem key={item.title}>
     {item.subItems ? (
       <Collapsible className="group/collapsible">
@@ -75,7 +84,7 @@ const renderMenuItem = (item: MenuItem) => (
           <SidebarMenuButton>
             <item.icon className="h-4 w-4" />
             <span>{item.title}</span>
-            {item.title === "Projects" && <SidebarMenuBadge>{item.subItems.length}</SidebarMenuBadge>}
+            {!isMobile && item.title === "Projects" && <SidebarMenuBadge>{item.subItems.length}</SidebarMenuBadge>}
           </SidebarMenuButton>
         </CollapsibleTrigger>
         <CollapsibleContent>
@@ -104,20 +113,86 @@ const renderMenuItem = (item: MenuItem) => (
 )
 
 export function AppSidebar() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
   return (
-    <Sidebar side="left">
-      <SidebarInset>
-        <SidebarContent>
-          <SidebarGroup>
-            <SidebarGroupLabel>Navigation</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {items.map(renderMenuItem)}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        </SidebarContent>
-      </SidebarInset>
-    </Sidebar>
+    <>
+      {/* Mobile Menu Toggle Button */}
+      {isMobile && (
+        <button
+          onClick={toggleMobileMenu}
+          className="fixed top-6 left-4 z-[100] p-2 rounded-md bg-background border border-border"
+          aria-label="Toggle menu"
+        >
+          {isMobileMenuOpen ? (
+            <X className="h-6 w-6" />
+          ) : (
+            <Menu className="h-6 w-6" />
+          )}
+        </button>
+      )}
+
+      {/* Mobile Menu Sheet */}
+      {isMobile && (
+        <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+          <SheetContent side="left" className="w-72 p-0">
+            <SheetHeader className="sr-only">
+              <SheetTitle>Navigation</SheetTitle>
+              <SheetDescription>Mobile navigation menu</SheetDescription>
+            </SheetHeader>
+            <div className="h-full flex flex-col justify-center pt-16">
+              <SidebarContent>
+                <SidebarGroup>
+                  <SidebarGroupLabel>Navigation</SidebarGroupLabel>
+                  <SidebarGroupContent>
+                    <SidebarMenu className="space-y-2">
+                      {items.map(item => renderMenuItem(item, true))}
+                    </SidebarMenu>
+                  </SidebarGroupContent>
+                </SidebarGroup>
+              </SidebarContent>
+            </div>
+            <SheetClose className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-accent-foreground">
+              <X className="h-4 w-4" />
+              <span className="sr-only">Close</span>
+            </SheetClose>
+          </SheetContent>
+        </Sheet>
+      )}
+
+      {/* Desktop Sidebar */}
+      {!isMobile && (
+        <Sidebar side="left">
+          <SidebarInset>
+            <SidebarContent>
+              <SidebarGroup>
+                <SidebarGroupLabel>Navigation</SidebarGroupLabel>
+                <SidebarGroupContent>
+                  <SidebarMenu>
+                    {items.map(item => renderMenuItem(item, false))}
+                  </SidebarMenu>
+                </SidebarGroupContent>
+              </SidebarGroup>
+            </SidebarContent>
+          </SidebarInset>
+        </Sidebar>
+      )}
+    </>
   )
 } 

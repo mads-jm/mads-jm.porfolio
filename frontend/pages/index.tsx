@@ -8,7 +8,7 @@ import ReactMarkdown from 'react-markdown'
 import { getMarkdownContent } from '../lib/markdown'
 import { Contact } from '../components/Contact'
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 
 interface SectionData {
   title?: string
@@ -84,16 +84,196 @@ const ImageModal = ({ src, alt, onClose }: { src: string, alt: string, onClose: 
   )
 }
 
-// Input: Section content and ID
-// Output: Rendered section with markdown content
-const renderSection = (content: string, id: string, allSections?: {[key: string]: SectionContent}, onImageClick?: (src: string, alt: string) => void) => {
-  if (id === 'home' && allSections) {
+const Home: NextPage<HomeProps> = ({ sections }) => {
+  const [expandedImage, setExpandedImage] = useState<{src: string, alt: string} | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const handleImageClick = useCallback((src: string, alt: string) => {
+    setExpandedImage({ src, alt });
+  }, []);
+
+  const renderCarousel = useCallback((images: Array<{src: string, alt: string}>) => {
+    const carouselOptions = {
+      loop: true,
+      align: "start" as const,
+      slidesToScroll: 1,
+      dragFree: false,
+      ...(isMobile ? { 
+        slidesToShow: 1,
+        spacing: 10 
+      } : {
+        slidesToShow: 3,
+        spacing: 20
+      })
+    };
+
+    const carouselItemClass = `${isMobile ? 'basis-full' : 'basis-1/3'} flex justify-center pl-4`;
+
+    return (
+      <div style={{ 
+        display: 'flex', 
+        flexDirection: 'column', 
+        alignItems: 'center', 
+        width: '95%', 
+        padding: '0 1rem',
+        margin: '0 auto'
+      }}>
+        <Carousel 
+          opts={carouselOptions}
+          className="w-full"
+        >
+          <CarouselContent className="flex -ml-4">
+            {images.map((item, index) => (
+              <CarouselItem key={index} className={carouselItemClass}>
+                <div className="cursor-pointer" onClick={() => handleImageClick(item.src, item.alt)}>
+                  <Image 
+                    src={item.src} 
+                    alt={item.alt} 
+                    width={480} 
+                    height={270} 
+                    style={{ 
+                      width: 'auto', 
+                      height: isMobile ? '250px' : '330px',
+                      maxWidth: '100%' 
+                    }} 
+                    className="object-cover transition-all hover:scale-105"
+                  />
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="bg-primary text-primary-foreground border-border carousel-button" />
+          <CarouselNext className="bg-primary text-primary-foreground border-border carousel-button" />
+        </Carousel>
+      </div>
+    );
+  }, [isMobile, handleImageClick]);
+
+  const renderSection = useCallback((content: string, id: string, allSections?: {[key: string]: SectionContent}) => {
+    if (id === 'home' && allSections) {
+      const homeImages = [
+        { src: "https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjv03EyzDDZg0mYBiM43271b8AJcFG6wTV5saW", alt: "Chester" },
+        { src: "https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjunwSWmI0cIjg3BZdiJowSTfR8rl9WGL6m2b1", alt: "Latte Art 2024" },
+        { src: "https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNje9lc5UffMjBseuvGIUcb9FWdHmpONYkoZEKr", alt: "Latte Art 2024 2" },
+        { src: "https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjsU4pIOn345OyM2j0kCJQ6lcYngt9VFziofvT", alt: "Desk" },
+        { src: "https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjh0H571WYQRTd6qklsFrWe4cU3bC8MigLN7vA", alt: "Bass Canyon" },
+        { src: "https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjyQo83uqXAD0saPGEeuYNK8LjZS4WMIm9kz1r", alt: "Bass Canyon 2" }
+      ];
+
+      return (
+        <section id={id} className={styles.section}>
+          <div className="react-markdown">
+            <ReactMarkdown>{content}</ReactMarkdown>
+          </div>
+          <Image src="/divider.svg" alt="Section divider" width={1920} height={2} style={{ width: '100%', height: '2px' }} />
+          {renderCarousel(homeImages)}
+          <Image src="/divider.svg" alt="Section divider" width={1920} height={2} style={{ width: '100%', height: '2px' }} />
+
+          <div className="mt-8 w-full max-w-md mx-auto">
+            <Contact content={allSections.contact.content} />
+          </div>
+          
+          <ScrollIndicator />
+          <Image src="/divider.svg" alt="Section divider" width={1920} height={4} style={{ width: '100%', height: '4px' }} />
+        </section>
+      )
+    }
+    if (id === 'contact') {
+      return (
+        <section id={id} className={styles.section}>
+          <Contact content={content} />
+          <Image src="/divider.svg" alt="Section divider" width={1920} height={4} style={{ width: '100%', height: '4px' }} />
+        </section>
+      )
+    }
     return (
       <section id={id} className={styles.section}>
         <div className="react-markdown">
           <ReactMarkdown>{content}</ReactMarkdown>
         </div>
-        <Image src="/divider.svg" alt="Section divider" width={1920} height={2} style={{ width: '100%', height: '2px' }} />
+        <Image src="/divider.svg" alt="Section divider" width={1920} height={4} style={{ width: '100%', height: '4px' }} />
+      </section>
+    )
+  }, [renderCarousel]);
+
+  const renderProjectSection = useCallback((name: string, content: string) => {
+    const iconPath = `/projects/${name.toLowerCase().replace(' ', '')}.ico`;
+    
+    // Project-specific image arrays
+    const projectImages: Record<string, { src: string, alt: string, type?: 'image' | 'spotify' }[]> = {
+      'EmailEssence': [
+        { src: 'https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjUrh23jbW6d9Ra8hBcVYTtwP0Dji5yJs7eES2', alt: 'EmailEssence Screenshot 1', type: 'image' },
+        { src: 'https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjprm1QkzGEPjidDz7AUys8ev256YTLbFZocMx', alt: 'EmailEssence Screenshot 2', type: 'image' },
+      ],
+      'ReverbXR': [
+        { src: 'https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjq4GZLzGh0pZivJbPAEcongRdQtewV6DxLfyG', alt: 'ReverbXR v2', type: 'image' },
+        { src: 'https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjKGomwQLgAUnSZdIuQlaNTyHWEscxr6VpFqoB', alt: 'ReverbXR v1 Final', type: 'image' },
+        { src: 'https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNj8dTvhqGaSOBD9ZzAXdiosC5GunQHKYNbFJ1R', alt: 'ReverbXR v1', type: 'image' },
+        { src: 'https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjWVxqg04upgRSyMNarcl0H3nB1tjEIfLoexVY', alt: 'ReverbXR 2D Prototype', type: 'image' },
+      ],
+      'WhatNext': [
+        { 
+          src: 'https://open.spotify.com/embed/playlist/2kpswjk4hzWHQwpci2PUnc?utm_source=generator', 
+          alt: 'WhatNext Playlist 1', 
+          type: 'spotify' 
+        },
+        { 
+          src: 'https://open.spotify.com/embed/playlist/6KgZCaJ94sVwCVZiOt1ToE?utm_source=generator', 
+          alt: 'WhatNext Playlist 2', 
+          type: 'spotify' 
+        },
+        { 
+          src: 'https://open.spotify.com/embed/playlist/2oLS4kpcrgoA530LjNqH1V?utm_source=generator', 
+          alt: 'WhatNext Playlist 3', 
+          type: 'spotify' 
+        },
+        { 
+          src: 'https://open.spotify.com/embed/playlist/72jl5AIRhXgX12Gbtkifw5?utm_source=generator', 
+          alt: 'WhatNext Playlist 4', 
+          type: 'spotify' 
+        },
+        { 
+          src: 'https://open.spotify.com/embed/playlist/6FRUuTQFVtEQkECIqslQRS?utm_source=generator', 
+          alt: 'WhatNext Playlist 5', 
+          type: 'spotify' 
+        },
+        { 
+          src: 'https://open.spotify.com/embed/playlist/2TGkrJ3ZuNWAzFiLq9z2JY?utm_source=generator', 
+          alt: 'WhatNext Playlist 6', 
+          type: 'spotify' 
+        }
+      ]
+    };
+
+    const renderCarouselContent = (items: typeof projectImages[keyof typeof projectImages], type: 'image' | 'spotify') => {
+      const carouselOptions = {
+        loop: true,
+        align: "start" as const,
+        slidesToScroll: 1,
+        dragFree: false,
+        ...(isMobile ? { 
+          slidesToShow: 1,
+          spacing: 10 
+        } : {
+          slidesToShow: type === 'spotify' ? 2 : 3,
+          spacing: 20
+        })
+      };
+
+      const carouselItemClass = `${isMobile ? 'basis-full' : type === 'spotify' ? 'basis-1/2' : 'basis-1/3'} flex justify-center pl-4`;
+
+      return (
         <div style={{ 
           display: 'flex', 
           flexDirection: 'column', 
@@ -103,34 +283,43 @@ const renderSection = (content: string, id: string, allSections?: {[key: string]
           margin: '0 auto'
         }}>
           <Carousel 
-            opts={{ 
-              loop: true,
-              align: "start",
-              slidesToScroll: 1,
-              dragFree: false
-            }} 
+            opts={carouselOptions}
             className="w-full"
           >
             <CarouselContent className="flex -ml-4">
-              {[
-                { src: "https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjv03EyzDDZg0mYBiM43271b8AJcFG6wTV5saW", alt: "Chester" },
-                { src: "https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjunwSWmI0cIjg3BZdiJowSTfR8rl9WGL6m2b1", alt: "Latte Art 2024" },
-                { src: "https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNje9lc5UffMjBseuvGIUcb9FWdHmpONYkoZEKr", alt: "Latte Art 2024 2" },
-                { src: "https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjsU4pIOn345OyM2j0kCJQ6lcYngt9VFziofvT", alt: "Desk" },
-                { src: "https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjh0H571WYQRTd6qklsFrWe4cU3bC8MigLN7vA", alt: "Bass Canyon" },
-                { src: "https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjyQo83uqXAD0saPGEeuYNK8LjZS4WMIm9kz1r", alt: "Bass Canyon 2" }
-              ].map((item, index) => (
-                <CarouselItem key={index} className="basis-1/3 flex justify-center pl-4">
-                  <div className="cursor-pointer" onClick={() => onImageClick?.(item.src, item.alt)}>
-                    <Image 
-                      src={item.src} 
-                      alt={item.alt} 
-                      width={480} 
-                      height={270} 
-                      style={{ width: 'auto', height: '330px' }} 
-                      className="object-cover transition-all hover:scale-105"
-                    />
-                  </div>
+              {items.map((item, index) => (
+                <CarouselItem key={index} className={carouselItemClass}>
+                  {type === 'spotify' ? (
+                    <div className="w-full cursor-grab active:cursor-grabbing">
+                      <iframe 
+                        style={{ borderRadius: '12px' }} 
+                        src={item.src} 
+                        width="100%" 
+                        height={isMobile ? "152" : "352"} 
+                        frameBorder="0" 
+                        allowFullScreen 
+                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                        loading="lazy"
+                        draggable="true"
+                        className="transition-all hover:scale-105"
+                      />
+                    </div>
+                  ) : (
+                    <div className="cursor-pointer" onClick={() => handleImageClick(item.src, item.alt)}>
+                      <Image 
+                        src={item.src} 
+                        alt={item.alt} 
+                        width={480} 
+                        height={270} 
+                        style={{ 
+                          width: 'auto', 
+                          height: isMobile ? '250px' : '330px',
+                          maxWidth: '100%' 
+                        }} 
+                        className="object-cover transition-all hover:scale-105"
+                      />
+                    </div>
+                  )}
                 </CarouselItem>
               ))}
             </CarouselContent>
@@ -138,171 +327,38 @@ const renderSection = (content: string, id: string, allSections?: {[key: string]
             <CarouselNext className="bg-primary text-primary-foreground border-border carousel-button" />
           </Carousel>
         </div>
-        <Image src="/divider.svg" alt="Section divider" width={1920} height={2} style={{ width: '100%', height: '2px' }} />
+      );
+    };
 
-        <div className="mt-8 w-full max-w-md mx-auto">
-          <Contact content={allSections.contact.content} />
-        </div>
-        
-        <ScrollIndicator />
-        <Image src="/divider.svg" alt="Section divider" width={1920} height={4} style={{ width: '100%', height: '4px' }} />
-      </section>
-    )
-  }
-  if (id === 'contact') {
     return (
-      <section id={id} className={styles.section}>
-        <Contact content={content} />
-        <Image src="/divider.svg" alt="Section divider" width={1920} height={4} style={{ width: '100%', height: '4px' }} />
+      <section id={`projects-${name.toLowerCase()}`} className={styles.section}>
+        <Image src="/divider.svg" alt="Section divider" width={1920} height={2} style={{ width: '100%', height: '4px' }} />
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem 0' }}>
+          <div style={{ width: 64, height: 64, position: 'relative' }}>
+            <Image 
+              src={iconPath} 
+              alt={`${name} icon`} 
+              width={120}
+              height={120}
+              style={{ objectFit: 'contain' }}
+              priority
+            />
+          </div>
+          <h2>{name}</h2>
+        </div>
+        <div className="react-markdown" style={{ padding: '-1rem 0' }}>
+          <ReactMarkdown>{content}</ReactMarkdown>
+        </div>
+        <Image src="/divider.svg" alt="Section divider" width={1920} height={2} style={{ width: '100%', height: '2px' }} />
+        {projectImages[name]?.filter(item => item.type === 'image').length > 0 && (
+          renderCarouselContent(projectImages[name].filter(item => item.type === 'image'), 'image')
+        )}
+        {projectImages[name]?.filter(item => item.type === 'spotify').length > 0 && (
+          renderCarouselContent(projectImages[name].filter(item => item.type === 'spotify'), 'spotify')
+        )}
       </section>
     )
-  }
-  return (
-    <section id={id} className={styles.section}>
-      <div className="react-markdown">
-        <ReactMarkdown>{content}</ReactMarkdown>
-      </div>
-      <Image src="/divider.svg" alt="Section divider" width={1920} height={4} style={{ width: '100%', height: '4px' }} />
-    </section>
-  )
-}
-
-// Input: Project name and content
-// Output: Rendered project section with proper ID and icon
-const renderProjectSection = (name: string, content: string, onImageClick?: (src: string, alt: string) => void) => {
-  const iconPath = `/projects/${name.toLowerCase().replace(' ', '')}.ico`
-  
-  // Project-specific image arrays
-  const projectImages: Record<string, { src: string, alt: string, type?: 'image' | 'spotify' }[]> = {
-    'EmailEssence': [
-      { src: 'https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjUrh23jbW6d9Ra8hBcVYTtwP0Dji5yJs7eES2', alt: 'EmailEssence Screenshot 1', type: 'image' },
-      { src: 'https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjprm1QkzGEPjidDz7AUys8ev256YTLbFZocMx', alt: 'EmailEssence Screenshot 2', type: 'image' },
-    ],
-    'ReverbXR': [
-      { src: 'https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjq4GZLzGh0pZivJbPAEcongRdQtewV6DxLfyG', alt: 'ReverbXR v2', type: 'image' },
-      { src: 'https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjKGomwQLgAUnSZdIuQlaNTyHWEscxr6VpFqoB', alt: 'ReverbXR v1 Final', type: 'image' },
-      { src: 'https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNj8dTvhqGaSOBD9ZzAXdiosC5GunQHKYNbFJ1R', alt: 'ReverbXR v1', type: 'image' },
-      { src: 'https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjWVxqg04upgRSyMNarcl0H3nB1tjEIfLoexVY', alt: 'ReverbXR 2D Prototype', type: 'image' },
-    ],
-    'WhatNext': [
-      { 
-        src: 'https://open.spotify.com/embed/playlist/2kpswjk4hzWHQwpci2PUnc?utm_source=generator', 
-        alt: 'WhatNext Playlist 1', 
-        type: 'spotify' 
-      },
-      { 
-        src: 'https://open.spotify.com/embed/playlist/6KgZCaJ94sVwCVZiOt1ToE?utm_source=generator', 
-        alt: 'WhatNext Playlist 2', 
-        type: 'spotify' 
-      },
-      { 
-        src: 'https://open.spotify.com/embed/playlist/2oLS4kpcrgoA530LjNqH1V?utm_source=generator', 
-        alt: 'WhatNext Playlist 3', 
-        type: 'spotify' 
-      },
-      { 
-        src: 'https://open.spotify.com/embed/playlist/72jl5AIRhXgX12Gbtkifw5?utm_source=generator', 
-        alt: 'WhatNext Playlist 4', 
-        type: 'spotify' 
-      },
-      { 
-        src: 'https://open.spotify.com/embed/playlist/6FRUuTQFVtEQkECIqslQRS?utm_source=generator', 
-        alt: 'WhatNext Playlist 5', 
-        type: 'spotify' 
-      },
-      { 
-        src: 'https://open.spotify.com/embed/playlist/2TGkrJ3ZuNWAzFiLq9z2JY?utm_source=generator', 
-        alt: 'WhatNext Playlist 6', 
-        type: 'spotify' 
-      }
-    ]
-  }
-
-  return (
-    <section id={`projects-${name.toLowerCase()}`} className={styles.section}>
-      <Image src="/divider.svg" alt="Section divider" width={1920} height={2} style={{ width: '100%', height: '4px' }} />
-      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem 0' }}>
-        <div style={{ width: 64, height: 64, position: 'relative' }}>
-          <Image 
-            src={iconPath} 
-            alt={`${name} icon`} 
-            width={120}
-            height={120}
-            style={{ objectFit: 'contain' }}
-            priority
-          />
-        </div>
-        <h2>{name}</h2>
-      </div>
-      <div className="react-markdown" style={{ padding: '-1rem 0' }}>
-        <ReactMarkdown>{content}</ReactMarkdown>
-      </div>
-      <Image src="/divider.svg" alt="Section divider" width={1920} height={2} style={{ width: '100%', height: '2px' }} />
-      {/* Project Carousel */}
-      <div style={{ 
-        display: 'flex', 
-        flexDirection: 'column', 
-        alignItems: 'center', 
-        width: '95%', 
-        padding: '0 1rem',
-        margin: '2rem auto'
-      }}>
-        <Carousel 
-          opts={{ 
-            loop: true,
-            align: "start",
-            slidesToScroll: 1,
-            dragFree: false
-          }} 
-          className="w-full"
-        >
-          <CarouselContent className="flex -ml-4">
-            {projectImages[name]?.map((item, index) => (
-              <CarouselItem key={index} className="basis-1/3 flex justify-center pl-4">
-                {item.type === 'spotify' ? (
-                  <div className="w-full cursor-grab active:cursor-grabbing">
-                    <iframe 
-                      style={{ borderRadius: '12px' }} 
-                      src={item.src} 
-                      width="100%" 
-                      height="352" 
-                      frameBorder="0" 
-                      allowFullScreen 
-                      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-                      loading="lazy"
-                      draggable="true"
-                      className="transition-all hover:scale-105"
-                    />
-                  </div>
-                ) : (
-                  <div className="cursor-pointer" onClick={() => onImageClick?.(item.src, item.alt)}>
-                    <Image 
-                      src={item.src} 
-                      alt={item.alt} 
-                      width={480} 
-                      height={270} 
-                      style={{ width: 'auto', height: '330px' }} 
-                      className="object-cover transition-all hover:scale-105"
-                    />
-                  </div>
-                )}
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselPrevious className="bg-primary text-primary-foreground border-border carousel-button" />
-          <CarouselNext className="bg-primary text-primary-foreground border-border carousel-button" />
-        </Carousel>
-      </div>
-    </section>
-  )
-}
-
-const Home: NextPage<HomeProps> = ({ sections }) => {
-  const [expandedImage, setExpandedImage] = useState<{src: string, alt: string} | null>(null);
-
-  const handleImageClick = (src: string, alt: string) => {
-    setExpandedImage({ src, alt });
-  };
+  }, [isMobile, handleImageClick]);
 
   return (
     <SidebarProvider>
@@ -324,16 +380,15 @@ const Home: NextPage<HomeProps> = ({ sections }) => {
 
         {/* Endless scroll sections */}
         <main className={styles.main}>
-          
           {/* Main sections */}
-          {renderSection(sections.home.content, "home", sections, handleImageClick)}
+          {renderSection(sections.home.content, "home", sections)}
           {renderSection(sections.about.content, "about")}
           
           {/* Projects section with nested sections */}
           <section id="projects" className={styles.section}>
             <ReactMarkdown>{sections.projects.content}</ReactMarkdown>
             {sections.projects.subSections && Object.entries(sections.projects.subSections).map(([name, content]) => (
-              renderProjectSection(name, content, handleImageClick)
+              renderProjectSection(name, content)
             ))}
             <Image src="/divider.svg" alt="Section divider" width={1920} height={4} style={{ width: '100%', height: '2px' }} />
           </section>
@@ -348,8 +403,8 @@ const Home: NextPage<HomeProps> = ({ sections }) => {
         )}
       </div>
     </SidebarProvider>
-  )
-}
+  );
+};
 
 export async function getStaticProps() {
   const sections = {
