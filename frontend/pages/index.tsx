@@ -309,7 +309,7 @@ const Home: NextPage<HomeProps> = ({ sections }) => {
       <div className={styles.container}>
         <Head>
           <title>mads&apos; portfolio</title>
-          <meta name="description" content="A single-page site with smooth scrolling navigation." />
+          <meta name="description" content="Joseph Madigan's full-stack portfolio" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
 
