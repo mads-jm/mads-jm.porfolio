@@ -100,7 +100,7 @@ const renderMenuItem = (item: MenuItem) => (
 
 export function AppSidebar() {
   return (
-    <Sidebar side="left" variant="inset">
+    <Sidebar side="left">
       <SidebarInset>
         <SidebarContent>
           <SidebarGroup>

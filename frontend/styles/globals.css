@@ -97,6 +97,7 @@
   }
   body {
     @apply bg-background text-foreground;
+    padding-top: 20px; /* Add padding for the fixed header */
   }
 }
 
@@ -108,4 +109,17 @@
 
 .dark .react-markdown a {
   color: #60a5fa; /* blue-400 */
+}
+
+/* Carousel button styling */
+section .carousel-button:hover,
+.section .carousel-button:hover {
+  background-color: hsl(var(--secondary)) !important;
+  color: hsl(var(--secondary-foreground)) !important;
+}
+
+/* Sidebar hover states */
+.sidebar-item:hover {
+  background-color: hsl(var(--sidebar-accent));
+  color: hsl(var(--sidebar-accent-foreground));
 }

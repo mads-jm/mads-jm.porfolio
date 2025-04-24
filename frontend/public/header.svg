@@ -1,0 +1,9 @@
+<svg width="100%" height="20px" viewBox="0 0 100 20" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Shadow -->
+  <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+    <feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="#000000" flood-opacity="0.2"/>
+  </filter>
+
+  <!-- Ribbon -->
+  <rect x="0" y="0" width="100" height="5" fill="#0099CC" filter="url(#shadow)" />
+</svg>

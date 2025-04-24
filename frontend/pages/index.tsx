@@ -65,25 +65,31 @@ const renderSection = (content: string, id: string, allSections?: {[key: string]
           display: 'flex', 
           flexDirection: 'column', 
           alignItems: 'center', 
-          width: '100%', 
-          maxWidth: '480px',
+          width: '95%', 
           padding: '0 1rem',
           margin: '0 auto'
         }}>
-          <Carousel className="w-full">
-            <CarouselContent className="flex">
-              <CarouselItem className="flex justify-center">
+          <Carousel 
+            opts={{ 
+              loop: true,
+              align: "center",
+              slidesToScroll: "auto" 
+            }} 
+            className="w-full"
+          >
+            <CarouselContent className="flex -ml-4">
+              <CarouselItem className="basis-1/3 flex justify-center pl-4">
                   <Image src="https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjv03EyzDDZg0mYBiM43271b8AJcFG6wTV5saW" alt="Chester" width={480} height={240} style={{ width: 'auto', height: '80%' }} />
               </CarouselItem>
-              <CarouselItem className="flex justify-center">
+              <CarouselItem className="basis-1/3 flex justify-center pl-4">
                   <Image src="https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjunwSWmI0cIjg3BZdiJowSTfR8rl9WGL6m2b1" alt="Latte Art 2024" width={480} height={240} style={{ width: 'auto', height: '80%' }} />
               </CarouselItem>
-              <CarouselItem className="flex justify-center">
+              <CarouselItem className="basis-1/3 flex justify-center pl-4">
                   <Image src="https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjsU4pIOn345OyM2j0kCJQ6lcYngt9VFziofvT" alt="Desk" width={480} height={240} style={{ width: 'auto', height: '80%' }} />
               </CarouselItem>
             </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
+            <CarouselPrevious className="bg-primary text-primary-foreground border-border carousel-button" />
+            <CarouselNext className="bg-primary text-primary-foreground border-border carousel-button" />
           </Carousel>
         </div>
         
@@ -146,6 +152,11 @@ const Home: NextPage<HomeProps> = ({ sections }) => {
           <meta name="description" content="A single-page site with smooth scrolling navigation." />
           <link rel="icon" href="/favicon.ico" />
         </Head>
+
+        {/* Header ribbon */}
+        <div style={{ width: '100%', height: '20px', position: 'fixed', top: 0, left: 0, zIndex: 100 }}>
+          <Image src="/header.svg" alt="Header" width={1920} height={20} style={{ width: '100%', height: '20px' }} priority />
+        </div>
 
         <AppSidebar />
 
