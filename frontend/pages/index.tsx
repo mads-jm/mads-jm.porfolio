@@ -308,9 +308,11 @@ const Home: NextPage<HomeProps> = ({ sections }) => {
     <SidebarProvider>
       <div className={styles.container}>
         <Head>
-          <title>mads&apos; portfolio</title>
+          <title>mads</title>
           <meta name="description" content="Joseph Madigan's full-stack portfolio" />
-          <link rel="icon" href="/favicon.ico" />
+          <link rel="icon" href="/favicon.ico" sizes="any" />
+          <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+          <link rel="shortcut icon" href="/favicon.ico" />
         </Head>
 
         {/* Header ribbon */}
