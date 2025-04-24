@@ -1,4 +1,4 @@
-import { Calendar, Home, Inbox } from "lucide-react"
+import { Calendar, Home, Inbox, Music } from "lucide-react"
 
 import {
   Sidebar,
@@ -57,6 +57,11 @@ const items: MenuItem[] = [
       { title: "ReverbXR", url: "#projects-reverbxr" },
       { title: "WhatNext", url: "#projects-whatnext" },
     ],
+  },
+  {
+    title: "Music",
+    url: "#projects-whatnext",
+    icon: Music,
   },
 ]
 

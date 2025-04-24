@@ -8,6 +8,7 @@ import ReactMarkdown from 'react-markdown'
 import { getMarkdownContent } from '../lib/markdown'
 import { Contact } from '../components/Contact'
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
+import { useState } from 'react'
 
 interface SectionData {
   title?: string
@@ -52,9 +53,37 @@ const ScrollIndicator = () => {
   )
 }
 
+// Input: Image source and alt text
+// Output: Modal component for expanded image view
+const ImageModal = ({ src, alt, onClose }: { src: string, alt: string, onClose: () => void }) => {
+  return (
+    <div 
+      className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center cursor-pointer"
+      onClick={onClose}
+    >
+      <div className="relative max-w-[90vw] max-h-[90vh]">
+        <Image
+          src={src}
+          alt={alt}
+          width={1200}
+          height={800}
+          style={{ 
+            width: 'auto',
+            height: 'auto',
+            maxWidth: '90vw',
+            maxHeight: '90vh',
+            objectFit: 'contain'
+          }}
+          onClick={(e) => e.stopPropagation()}
+        />
+      </div>
+    </div>
+  )
+}
+
 // Input: Section content and ID
 // Output: Rendered section with markdown content
-const renderSection = (content: string, id: string, allSections?: {[key: string]: SectionContent}) => {
+const renderSection = (content: string, id: string, allSections?: {[key: string]: SectionContent}, onImageClick?: (src: string, alt: string) => void) => {
   if (id === 'home' && allSections) {
     return (
       <section id={id} className={styles.section}>
@@ -73,19 +102,59 @@ const renderSection = (content: string, id: string, allSections?: {[key: string]
             opts={{ 
               loop: true,
               align: "center",
-              slidesToScroll: "auto" 
+              slidesToScroll: "auto",
+              dragFree: true
             }} 
             className="w-full"
           >
             <CarouselContent className="flex -ml-4">
               <CarouselItem className="basis-1/3 flex justify-center pl-4">
-                  <Image src="https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjv03EyzDDZg0mYBiM43271b8AJcFG6wTV5saW" alt="Chester" width={480} height={240} style={{ width: 'auto', height: '80%' }} />
+                <div className="cursor-pointer" onClick={() => onImageClick?.("https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjv03EyzDDZg0mYBiM43271b8AJcFG6wTV5saW", "Chester")}>
+                  <Image 
+                    src="https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjv03EyzDDZg0mYBiM43271b8AJcFG6wTV5saW" 
+                    alt="Chester" 
+                    width={480} 
+                    height={270} 
+                    style={{ width: 'auto', height: '300px' }} 
+                    className="object-cover transition-all hover:scale-105"
+                  />
+                </div>
               </CarouselItem>
               <CarouselItem className="basis-1/3 flex justify-center pl-4">
-                  <Image src="https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjunwSWmI0cIjg3BZdiJowSTfR8rl9WGL6m2b1" alt="Latte Art 2024" width={480} height={240} style={{ width: 'auto', height: '80%' }} />
+                <div className="cursor-pointer" onClick={() => onImageClick?.("https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjunwSWmI0cIjg3BZdiJowSTfR8rl9WGL6m2b1", "Latte Art 2024")}>
+                  <Image 
+                    src="https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjunwSWmI0cIjg3BZdiJowSTfR8rl9WGL6m2b1" 
+                    alt="Latte Art 2024" 
+                    width={480} 
+                    height={270} 
+                    style={{ width: 'auto', height: '300px' }} 
+                    className="object-cover transition-all hover:scale-105"
+                  />
+                </div>
               </CarouselItem>
               <CarouselItem className="basis-1/3 flex justify-center pl-4">
-                  <Image src="https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjsU4pIOn345OyM2j0kCJQ6lcYngt9VFziofvT" alt="Desk" width={480} height={240} style={{ width: 'auto', height: '80%' }} />
+                <div className="cursor-pointer" onClick={() => onImageClick?.("https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjsU4pIOn345OyM2j0kCJQ6lcYngt9VFziofvT", "Desk")}>
+                  <Image 
+                    src="https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjsU4pIOn345OyM2j0kCJQ6lcYngt9VFziofvT" 
+                    alt="Desk" 
+                    width={480} 
+                    height={270} 
+                    style={{ width: 'auto', height: '300px' }} 
+                    className="object-cover transition-all hover:scale-105"
+                  />
+                </div>
+              </CarouselItem>
+              <CarouselItem className="basis-1/3 flex justify-center pl-4">
+                <div className="cursor-pointer" onClick={() => onImageClick?.("https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjh0H571WYQRTd6qklsFrWe4cU3bC8MigLN7vA", "Desk")}>
+                  <Image 
+                    src="https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjh0H571WYQRTd6qklsFrWe4cU3bC8MigLN7vA" 
+                    alt="Desk" 
+                    width={480} 
+                    height={270} 
+                    style={{ width: 'auto', height: '300px' }} 
+                    className="object-cover transition-all hover:scale-105"
+                  />
+                </div>
               </CarouselItem>
             </CarouselContent>
             <CarouselPrevious className="bg-primary text-primary-foreground border-border carousel-button" />
@@ -119,8 +188,55 @@ const renderSection = (content: string, id: string, allSections?: {[key: string]
 
 // Input: Project name and content
 // Output: Rendered project section with proper ID and icon
-const renderProjectSection = (name: string, content: string) => {
+const renderProjectSection = (name: string, content: string, onImageClick?: (src: string, alt: string) => void) => {
   const iconPath = `/projects/${name.toLowerCase().replace(' ', '')}.ico`
+  
+  // Project-specific image arrays
+  const projectImages: Record<string, { src: string, alt: string, type?: 'image' | 'spotify' }[]> = {
+    'EmailEssence': [
+      { src: 'https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjUrh23jbW6d9Ra8hBcVYTtwP0Dji5yJs7eES2', alt: 'EmailEssence Screenshot 1', type: 'image' },
+      { src: 'https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjprm1QkzGEPjidDz7AUys8ev256YTLbFZocMx', alt: 'EmailEssence Screenshot 2', type: 'image' },
+    ],
+    'ReverbXR': [
+      { src: 'https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjq4GZLzGh0pZivJbPAEcongRdQtewV6DxLfyG', alt: 'ReverbXR v2', type: 'image' },
+      { src: 'https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjKGomwQLgAUnSZdIuQlaNTyHWEscxr6VpFqoB', alt: 'ReverbXR v1 Final', type: 'image' },
+      { src: 'https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNj8dTvhqGaSOBD9ZzAXdiosC5GunQHKYNbFJ1R', alt: 'ReverbXR v1', type: 'image' },
+      { src: 'https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjWVxqg04upgRSyMNarcl0H3nB1tjEIfLoexVY', alt: 'ReverbXR 2D Prototype', type: 'image' },
+    ],
+    'WhatNext': [
+      { 
+        src: 'https://open.spotify.com/embed/playlist/2kpswjk4hzWHQwpci2PUnc?utm_source=generator', 
+        alt: 'WhatNext Playlist 1', 
+        type: 'spotify' 
+      },
+      { 
+        src: 'https://open.spotify.com/embed/playlist/6KgZCaJ94sVwCVZiOt1ToE?utm_source=generator', 
+        alt: 'WhatNext Playlist 2', 
+        type: 'spotify' 
+      },
+      { 
+        src: 'https://open.spotify.com/embed/playlist/2oLS4kpcrgoA530LjNqH1V?utm_source=generator', 
+        alt: 'WhatNext Playlist 3', 
+        type: 'spotify' 
+      },
+      { 
+        src: 'https://open.spotify.com/embed/playlist/72jl5AIRhXgX12Gbtkifw5?utm_source=generator', 
+        alt: 'WhatNext Playlist 4', 
+        type: 'spotify' 
+      },
+      { 
+        src: 'https://open.spotify.com/embed/playlist/6FRUuTQFVtEQkECIqslQRS?utm_source=generator', 
+        alt: 'WhatNext Playlist 5', 
+        type: 'spotify' 
+      },
+      { 
+        src: 'https://open.spotify.com/embed/playlist/2TGkrJ3ZuNWAzFiLq9z2JY?utm_source=generator', 
+        alt: 'WhatNext Playlist 6', 
+        type: 'spotify' 
+      }
+    ]
+  }
+
   return (
     <section id={`projects-${name.toLowerCase()}`} className={styles.section}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
@@ -139,11 +255,73 @@ const renderProjectSection = (name: string, content: string) => {
       <div className="react-markdown">
         <ReactMarkdown>{content}</ReactMarkdown>
       </div>
+      
+      {/* Project Carousel */}
+      <div style={{ 
+        display: 'flex', 
+        flexDirection: 'column', 
+        alignItems: 'center', 
+        width: '95%', 
+        padding: '0 1rem',
+        margin: '2rem auto'
+      }}>
+        <Carousel 
+          opts={{ 
+            loop: true,
+            align: "center",
+            slidesToScroll: "auto",
+            dragFree: true
+          }} 
+          className="w-full"
+        >
+          <CarouselContent className="flex -ml-4">
+            {projectImages[name]?.map((item, index) => (
+              <CarouselItem key={index} className="basis-1/3 flex justify-center pl-4">
+                {item.type === 'spotify' ? (
+                  <div className="w-full cursor-grab active:cursor-grabbing">
+                    <iframe 
+                      style={{ borderRadius: '12px' }} 
+                      src={item.src} 
+                      width="100%" 
+                      height="352" 
+                      frameBorder="0" 
+                      allowFullScreen 
+                      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                      loading="lazy"
+                      draggable="true"
+                      className="transition-all hover:scale-105"
+                    />
+                  </div>
+                ) : (
+                  <div className="cursor-pointer" onClick={() => onImageClick?.(item.src, item.alt)}>
+                    <Image 
+                      src={item.src} 
+                      alt={item.alt} 
+                      width={480} 
+                      height={270} 
+                      style={{ width: 'auto', height: '300px' }} 
+                      className="object-cover transition-all hover:scale-105"
+                    />
+                  </div>
+                )}
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="bg-primary text-primary-foreground border-border carousel-button" />
+          <CarouselNext className="bg-primary text-primary-foreground border-border carousel-button" />
+        </Carousel>
+      </div>
     </section>
   )
 }
 
 const Home: NextPage<HomeProps> = ({ sections }) => {
+  const [expandedImage, setExpandedImage] = useState<{src: string, alt: string} | null>(null);
+
+  const handleImageClick = (src: string, alt: string) => {
+    setExpandedImage({ src, alt });
+  };
+
   return (
     <SidebarProvider>
       <div className={styles.container}>
@@ -164,17 +342,25 @@ const Home: NextPage<HomeProps> = ({ sections }) => {
         <main className={styles.main}>
           
           {/* Main sections */}
-          {renderSection(sections.home.content, "home", sections)}
+          {renderSection(sections.home.content, "home", sections, handleImageClick)}
           {renderSection(sections.about.content, "about")}
           
           {/* Projects section with nested sections */}
           <section id="projects" className={styles.section}>
             <ReactMarkdown>{sections.projects.content}</ReactMarkdown>
             {sections.projects.subSections && Object.entries(sections.projects.subSections).map(([name, content]) => (
-              renderProjectSection(name, content)
+              renderProjectSection(name, content, handleImageClick)
             ))}
           </section>
         </main>
+
+        {expandedImage && (
+          <ImageModal
+            src={expandedImage.src}
+            alt={expandedImage.alt}
+            onClose={() => setExpandedImage(null)}
+          />
+        )}
       </div>
     </SidebarProvider>
   )
