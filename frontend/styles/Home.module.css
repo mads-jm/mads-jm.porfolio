@@ -4,6 +4,13 @@
   width: 100%;
 }
 
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    margin-top: -1rem; /* Reduce top margin */
+  }
+}
+
 /* 
    MAIN CONTENT
    - Properly bound content area with max-width
@@ -11,9 +18,18 @@
 */
 .main {
   flex: 1;
-  padding: 1rem;
+  padding: 0rem;
   max-width: calc(100% - 16rem); /* Account for sidebar width */
   margin-left: auto; /* Push content to the right */
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .main {
+    max-width: 100%;
+    margin-left: 0;
+    padding: 0.25rem; /* Reduce padding */
+  }
 }
 
 /* 
@@ -32,6 +48,37 @@
   word-wrap: break-word;
   overflow-wrap: break-word;
   white-space: pre-wrap;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .section {
+    max-width: 100%;
+    padding: 0.5rem; /* Reduce padding */
+    min-height: calc(100vh - 60px);
+  }
+
+  .section h1 {
+    font-size: 2rem;
+    margin-top: 2rem; /* Reduce top margin */
+  }
+
+  .section h2 {
+    font-size: 1.5rem;
+  }
+
+  .section h3 {
+    font-size: 1.25rem;
+  }
+
+  .section img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .section iframe {
+    max-width: 100%;
+  }
 }
 
 .section:nth-of-type(even) {
@@ -83,6 +130,14 @@
   bottom: 2rem;
   color: rgba(255, 255, 255, 0.6);
   transition: color 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .scrollIndicator {
+    right: 1rem;
+    bottom: 1rem;
+    transform: scale(0.8);
+  }
 }
 
 .scrollIndicator:hover {
