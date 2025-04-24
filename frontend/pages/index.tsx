@@ -105,61 +105,34 @@ const renderSection = (content: string, id: string, allSections?: {[key: string]
           <Carousel 
             opts={{ 
               loop: true,
-              align: "center",
-              slidesToScroll: "auto",
-              dragFree: true
+              align: "start",
+              slidesToScroll: 1,
+              dragFree: false
             }} 
             className="w-full"
           >
             <CarouselContent className="flex -ml-4">
-              <CarouselItem className="basis-1/3 flex justify-center pl-4">
-                <div className="cursor-pointer" onClick={() => onImageClick?.("https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjv03EyzDDZg0mYBiM43271b8AJcFG6wTV5saW", "Chester")}>
-                  <Image 
-                    src="https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjv03EyzDDZg0mYBiM43271b8AJcFG6wTV5saW" 
-                    alt="Chester" 
-                    width={480} 
-                    height={270} 
-                    style={{ width: 'auto', height: '300px' }} 
-                    className="object-cover transition-all hover:scale-105"
-                  />
-                </div>
-              </CarouselItem>
-              <CarouselItem className="basis-1/3 flex justify-center pl-4">
-                <div className="cursor-pointer" onClick={() => onImageClick?.("https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjunwSWmI0cIjg3BZdiJowSTfR8rl9WGL6m2b1", "Latte Art 2024")}>
-                  <Image 
-                    src="https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjunwSWmI0cIjg3BZdiJowSTfR8rl9WGL6m2b1" 
-                    alt="Latte Art 2024" 
-                    width={480} 
-                    height={270} 
-                    style={{ width: 'auto', height: '300px' }} 
-                    className="object-cover transition-all hover:scale-105"
-                  />
-                </div>
-              </CarouselItem>
-              <CarouselItem className="basis-1/3 flex justify-center pl-4">
-                <div className="cursor-pointer" onClick={() => onImageClick?.("https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjsU4pIOn345OyM2j0kCJQ6lcYngt9VFziofvT", "Desk")}>
-                  <Image 
-                    src="https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjsU4pIOn345OyM2j0kCJQ6lcYngt9VFziofvT" 
-                    alt="Desk" 
-                    width={480} 
-                    height={270} 
-                    style={{ width: 'auto', height: '300px' }} 
-                    className="object-cover transition-all hover:scale-105"
-                  />
-                </div>
-              </CarouselItem>
-              <CarouselItem className="basis-1/3 flex justify-center pl-4">
-                <div className="cursor-pointer" onClick={() => onImageClick?.("https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjh0H571WYQRTd6qklsFrWe4cU3bC8MigLN7vA", "Bass Canyon")}>
-                  <Image 
-                    src="https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjh0H571WYQRTd6qklsFrWe4cU3bC8MigLN7vA" 
-                    alt="Bass Canyon" 
-                    width={480} 
-                    height={270} 
-                    style={{ width: 'auto', height: '300px' }} 
-                    className="object-cover transition-all hover:scale-105"
-                  />
-                </div>
-              </CarouselItem>
+              {[
+                { src: "https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjv03EyzDDZg0mYBiM43271b8AJcFG6wTV5saW", alt: "Chester" },
+                { src: "https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjunwSWmI0cIjg3BZdiJowSTfR8rl9WGL6m2b1", alt: "Latte Art 2024" },
+                { src: "https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNje9lc5UffMjBseuvGIUcb9FWdHmpONYkoZEKr", alt: "Latte Art 2024 2" },
+                { src: "https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjsU4pIOn345OyM2j0kCJQ6lcYngt9VFziofvT", alt: "Desk" },
+                { src: "https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjh0H571WYQRTd6qklsFrWe4cU3bC8MigLN7vA", alt: "Bass Canyon" },
+                { src: "https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjyQo83uqXAD0saPGEeuYNK8LjZS4WMIm9kz1r", alt: "Bass Canyon 2" }
+              ].map((item, index) => (
+                <CarouselItem key={index} className="basis-1/3 flex justify-center pl-4">
+                  <div className="cursor-pointer" onClick={() => onImageClick?.(item.src, item.alt)}>
+                    <Image 
+                      src={item.src} 
+                      alt={item.alt} 
+                      width={480} 
+                      height={270} 
+                      style={{ width: 'auto', height: '330px' }} 
+                      className="object-cover transition-all hover:scale-105"
+                    />
+                  </div>
+                </CarouselItem>
+              ))}
             </CarouselContent>
             <CarouselPrevious className="bg-primary text-primary-foreground border-border carousel-button" />
             <CarouselNext className="bg-primary text-primary-foreground border-border carousel-button" />
@@ -277,9 +250,9 @@ const renderProjectSection = (name: string, content: string, onImageClick?: (src
         <Carousel 
           opts={{ 
             loop: true,
-            align: "center",
-            slidesToScroll: "auto",
-            dragFree: true
+            align: "start",
+            slidesToScroll: 1,
+            dragFree: false
           }} 
           className="w-full"
         >
@@ -308,7 +281,7 @@ const renderProjectSection = (name: string, content: string, onImageClick?: (src
                       alt={item.alt} 
                       width={480} 
                       height={270} 
-                      style={{ width: 'auto', height: '300px' }} 
+                      style={{ width: 'auto', height: '330px' }} 
                       className="object-cover transition-all hover:scale-105"
                     />
                   </div>
