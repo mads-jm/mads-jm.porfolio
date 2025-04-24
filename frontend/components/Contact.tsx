@@ -43,7 +43,7 @@ export function Contact({ content }: { content: string }) {
   }
 
   return (
-    <div className="flex flex-col gap-8 ">
+    <div className="flex flex-col gap-8" style={{ padding: '1rem 0' }}>
       <div className="prose dark:prose-invert max-w-none pt-6">
         <ReactMarkdown>{description}</ReactMarkdown>
       </div>

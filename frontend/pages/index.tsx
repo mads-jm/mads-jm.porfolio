@@ -93,6 +93,7 @@ const renderSection = (content: string, id: string, allSections?: {[key: string]
         <div className="react-markdown">
           <ReactMarkdown>{content}</ReactMarkdown>
         </div>
+        <Image src="/divider.svg" alt="Section divider" width={1920} height={2} style={{ width: '100%', height: '2px' }} />
         <div style={{ 
           display: 'flex', 
           flexDirection: 'column', 
@@ -164,12 +165,14 @@ const renderSection = (content: string, id: string, allSections?: {[key: string]
             <CarouselNext className="bg-primary text-primary-foreground border-border carousel-button" />
           </Carousel>
         </div>
-        
+        <Image src="/divider.svg" alt="Section divider" width={1920} height={2} style={{ width: '100%', height: '2px' }} />
+
         <div className="mt-8 w-full max-w-md mx-auto">
           <Contact content={allSections.contact.content} />
         </div>
         
         <ScrollIndicator />
+        <Image src="/divider.svg" alt="Section divider" width={1920} height={4} style={{ width: '100%', height: '4px' }} />
       </section>
     )
   }
@@ -177,6 +180,7 @@ const renderSection = (content: string, id: string, allSections?: {[key: string]
     return (
       <section id={id} className={styles.section}>
         <Contact content={content} />
+        <Image src="/divider.svg" alt="Section divider" width={1920} height={4} style={{ width: '100%', height: '4px', padding: '1rem 0' }} />
       </section>
     )
   }
@@ -185,6 +189,7 @@ const renderSection = (content: string, id: string, allSections?: {[key: string]
       <div className="react-markdown">
         <ReactMarkdown>{content}</ReactMarkdown>
       </div>
+      <Image src="/divider.svg" alt="Section divider" width={1920} height={4} style={{ width: '100%', height: '4px' }} />
     </section>
   )
 }
@@ -242,7 +247,8 @@ const renderProjectSection = (name: string, content: string, onImageClick?: (src
 
   return (
     <section id={`projects-${name.toLowerCase()}`} className={styles.section}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+      <Image src="/divider.svg" alt="Section divider" width={1920} height={2} style={{ width: '100%', height: '4px' }} />
+      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem 0' }}>
         <div style={{ width: 64, height: 64, position: 'relative' }}>
           <Image 
             src={iconPath} 
@@ -255,10 +261,10 @@ const renderProjectSection = (name: string, content: string, onImageClick?: (src
         </div>
         <h2>{name}</h2>
       </div>
-      <div className="react-markdown">
+      <div className="react-markdown" style={{ padding: '0 1rem' }}>
         <ReactMarkdown>{content}</ReactMarkdown>
       </div>
-      
+      <Image src="/divider.svg" alt="Section divider" width={1920} height={2} style={{ width: '100%', height: '2px' }} />
       {/* Project Carousel */}
       <div style={{ 
         display: 'flex', 
@@ -354,6 +360,7 @@ const Home: NextPage<HomeProps> = ({ sections }) => {
             {sections.projects.subSections && Object.entries(sections.projects.subSections).map(([name, content]) => (
               renderProjectSection(name, content, handleImageClick)
             ))}
+            <Image src="/divider.svg" alt="Section divider" width={1920} height={4} style={{ width: '100%', height: '2px' }} />
           </section>
         </main>
 

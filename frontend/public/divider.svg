@@ -1,0 +1,9 @@
+<svg width="100%" height="2px" viewBox="0 0 100 2" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Shadow -->
+  <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+    <feDropShadow dx="0" dy="0.5" stdDeviation="0.5" flood-color="#000000" flood-opacity="0.1"/>
+  </filter>
+
+  <!-- Divider -->
+  <rect x="0" y="0" width="100" height="1" fill="#0099CC" fill-opacity="0.3" filter="url(#shadow)" />
+</svg> 
