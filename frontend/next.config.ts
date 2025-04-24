@@ -10,10 +10,7 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  // Explicitly set public directory
   distDir: '.next',
-  publicDir: 'public',
-  /* config options here */
 };
 
 export default nextConfig;
