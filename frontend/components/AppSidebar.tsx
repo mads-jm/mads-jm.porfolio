@@ -21,9 +21,6 @@ import {
 import {
   Sheet,
   SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetDescription,
   SheetClose,
 } from "@/components/ui/sheet"
 
@@ -137,7 +134,7 @@ export function AppSidebar() {
       {isMobile && (
         <button
           onClick={toggleMobileMenu}
-          className="fixed top-6 left-4 z-[100] p-2 rounded-md bg-background border border-border"
+          className="fixed top-6 left-4 z-[9999] p-2 rounded-md bg-background border border-border shadow-md"
           aria-label="Toggle menu"
         >
           {isMobileMenuOpen ? (
@@ -152,11 +149,7 @@ export function AppSidebar() {
       {isMobile && (
         <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
           <SheetContent side="left" className="w-72 p-0">
-            <SheetHeader className="sr-only">
-              <SheetTitle>Navigation</SheetTitle>
-              <SheetDescription>Mobile navigation menu</SheetDescription>
-            </SheetHeader>
-            <div className="h-full flex flex-col justify-center pt-16">
+            <div className="h-full flex flex-col justify-center">
               <SidebarContent>
                 <SidebarGroup>
                   <SidebarGroupLabel>Navigation</SidebarGroupLabel>
