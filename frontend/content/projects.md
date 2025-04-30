@@ -2,7 +2,7 @@
 
 ### EmailEssence
 **Email Productivity Tool**  
-[GitHub Repo](https://github.com/EmailEssence/EmailEssence.github.io)  
+[View App](https://email.madigan.app/)   -   [View Code](https://github.com/EmailEssence/EmailEssence.github.io)  
 October 2024 - Ongoing  
 Stack: JavaScript | Python | OpenRouter API  
 ```
@@ -16,7 +16,7 @@ Stack: JavaScript | Python | OpenRouter API
 
 ### ReverbXR
 **Web-based 3D/XR Audio Visualizer**  
-[Vercel Deployment](https://reverb-xr.vercel.app/) - [GitHub Repo](https://github.com/mads-jm/reverb-xr)  
+[View App](https://reverb-xr.madigan.app/)   -   [View Code](https://github.com/mads-jm/reverb-xr)  
 April 2024 - June 2024  
 Stack: HTML | JavaScript | Web Audio API  
 ```

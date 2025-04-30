@@ -1,6 +1,6 @@
 # About Me
 
-### [Resume](https://docs.google.com/document/d/1HqCspncpNP31ns-R4zuZHlaF6cYVFCS5UfRx_gPu-xw/edit?usp=sharing)
+[Resume](https://docs.google.com/document/d/1HqCspncpNP31ns-R4zuZHlaF6cYVFCS5UfRx_gPu-xw/edit?usp=sharing)
 
 ```
 Former retail management professional leveraging strong interpersonal skills and leadership experience in my journey to software engineering. 

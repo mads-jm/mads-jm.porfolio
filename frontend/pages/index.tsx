@@ -8,6 +8,8 @@ import { getMarkdownContent } from '../lib/markdown'
 import { Contact } from '../components/Contact'
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
 import { useState, useEffect, useCallback } from 'react'
+import { ButtonLink } from '../components/ButtonLink'
+import type { Components } from 'react-markdown'
 
 interface SectionData {
   title?: string
@@ -22,7 +24,44 @@ interface SectionContent {
 
 interface HomeProps {
   sections: {
-    [key: string]: SectionContent
+    home: SectionContent
+    about: SectionContent
+    projects: SectionContent
+    contact: SectionContent
+  }
+}
+
+// Extend Components type to include our custom components
+interface CustomComponents extends Components {
+  ProjectLink: typeof ButtonLink
+}
+
+// Custom components for ReactMarkdown
+const markdownComponents: CustomComponents = {
+  ProjectLink: ButtonLink,
+  a: ({ href, children }) => {
+    if (href?.includes('github.com')) {
+      return (
+        <ButtonLink href={href} type="github">
+          {children}
+        </ButtonLink>
+      )
+    }
+    if (href?.includes('madigan.app')) {
+      return (
+        <ButtonLink href={href} type="app">
+          {children}
+        </ButtonLink>
+      )
+    }
+    if (href?.includes('docs.google.com')) {
+      return (
+        <ButtonLink href={href} type="resume">
+          {children}
+        </ButtonLink>
+      )
+    }
+    return <a href={href}>{children}</a>
   }
 }
 
@@ -173,7 +212,9 @@ const Home: NextPage<HomeProps> = ({ sections }) => {
       return (
         <section id={id} className={styles.section}>
           <div className="react-markdown">
-            <ReactMarkdown>{content}</ReactMarkdown>
+            <ReactMarkdown components={markdownComponents}>
+              {content}
+            </ReactMarkdown>
           </div>
           <Image src="/divider.svg" alt="Section divider" width={1920} height={2} style={{ width: '100%', height: '2px' }} />
           {renderCarousel(homeImages)}
@@ -199,7 +240,9 @@ const Home: NextPage<HomeProps> = ({ sections }) => {
     return (
       <section id={id} className={styles.section}>
         <div className="react-markdown">
-          <ReactMarkdown>{content}</ReactMarkdown>
+          <ReactMarkdown components={markdownComponents}>
+            {content}
+          </ReactMarkdown>
         </div>
         <Image src="/divider.svg" alt="Section divider" width={1920} height={4} style={{ width: '100%', height: '4px' }} />
       </section>
@@ -216,7 +259,6 @@ const Home: NextPage<HomeProps> = ({ sections }) => {
         { src: 'https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjprm1QkzGEPjidDz7AUys8ev256YTLbFZocMx', alt: 'EmailEssence Screenshot 2', type: 'image' },
         { src: 'https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjsf8xZS345OyM2j0kCJQ6lcYngt9VFziofvTW', alt: 'EmailEssence Screenshot 3', type: 'image' },
         { src: 'https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjQebo5pW6CG1RlbTWjvaFQu9IyZJsp2iL36nm', alt: 'EmailEssence Screenshot 4', type: 'image' },
-
       ],
       'ReverbXR': [
         { src: 'https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjq4GZLzGh0pZivJbPAEcongRdQtewV6DxLfyG', alt: 'ReverbXR v2', type: 'image' },
@@ -349,7 +391,9 @@ const Home: NextPage<HomeProps> = ({ sections }) => {
           <h2>{name}</h2>
         </div>
         <div className="react-markdown" style={{ padding: '-1rem 0' }}>
-          <ReactMarkdown>{content}</ReactMarkdown>
+          <ReactMarkdown components={markdownComponents}>
+            {content}
+          </ReactMarkdown>
         </div>
         <Image src="/divider.svg" alt="Section divider" width={1920} height={2} style={{ width: '100%', height: '2px' }} />
         {projectImages[name]?.filter(item => item.type === 'image').length > 0 && (
