@@ -78,7 +78,7 @@ const renderMenuItem = (item: MenuItem, isMobile: boolean) => (
     {item.subItems ? (
       <Collapsible className="group/collapsible">
         <CollapsibleTrigger asChild>
-          <SidebarMenuButton>
+          <SidebarMenuButton className="hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
             <item.icon className="h-4 w-4" />
             <span>{item.title}</span>
             {!isMobile && item.title === "Projects" && <SidebarMenuBadge>{item.subItems.length}</SidebarMenuBadge>}
@@ -88,7 +88,7 @@ const renderMenuItem = (item: MenuItem, isMobile: boolean) => (
           <SidebarMenu className="ml-4">
             {item.subItems.map((subItem) => (
               <SidebarMenuItem key={subItem.title}>
-                <SidebarMenuButton asChild>
+                <SidebarMenuButton asChild className="hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
                   <a href={subItem.url}>
                     <span>{subItem.title}</span>
                   </a>
@@ -99,7 +99,7 @@ const renderMenuItem = (item: MenuItem, isMobile: boolean) => (
         </CollapsibleContent>
       </Collapsible>
     ) : (
-      <SidebarMenuButton asChild>
+      <SidebarMenuButton asChild className="hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
         <a href={item.url}>
           <item.icon className="h-4 w-4" />
           <span>{item.title}</span>
@@ -148,7 +148,7 @@ export function AppSidebar() {
       {/* Mobile Menu Sheet */}
       {isMobile && (
         <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-          <SheetContent side="left" className="w-72 p-0">
+          <SheetContent side="left" className="w-72 p-0 bg-sidebar text-sidebar-foreground" data-sidebar="sidebar">
             <div className="h-full flex flex-col justify-center">
               <SidebarContent>
                 <SidebarGroup>
@@ -171,7 +171,7 @@ export function AppSidebar() {
 
       {/* Desktop Sidebar */}
       {!isMobile && (
-        <Sidebar side="left">
+        <Sidebar side="left" data-sidebar="sidebar" className="bg-sidebar text-sidebar-foreground">
           <SidebarInset>
             <SidebarContent>
               <SidebarGroup>

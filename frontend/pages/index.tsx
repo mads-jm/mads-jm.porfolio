@@ -2,7 +2,6 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import { SidebarProvider} from "@/components/ui/sidebar"
 import { AppSidebar } from "../components/AppSidebar"
 import ReactMarkdown from 'react-markdown'
 import { getMarkdownContent } from '../lib/markdown'
@@ -215,6 +214,9 @@ const Home: NextPage<HomeProps> = ({ sections }) => {
       'EmailEssence': [
         { src: 'https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjUrh23jbW6d9Ra8hBcVYTtwP0Dji5yJs7eES2', alt: 'EmailEssence Screenshot 1', type: 'image' },
         { src: 'https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjprm1QkzGEPjidDz7AUys8ev256YTLbFZocMx', alt: 'EmailEssence Screenshot 2', type: 'image' },
+        { src: 'https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjsf8xZS345OyM2j0kCJQ6lcYngt9VFziofvTW', alt: 'EmailEssence Screenshot 3', type: 'image' },
+        { src: 'https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjQebo5pW6CG1RlbTWjvaFQu9IyZJsp2iL36nm', alt: 'EmailEssence Screenshot 4', type: 'image' },
+
       ],
       'ReverbXR': [
         { src: 'https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjq4GZLzGh0pZivJbPAEcongRdQtewV6DxLfyG', alt: 'ReverbXR v2', type: 'image' },
@@ -361,48 +363,46 @@ const Home: NextPage<HomeProps> = ({ sections }) => {
   }, [isMobile, handleImageClick]);
 
   return (
-    <SidebarProvider>
-      <div className={styles.container}>
-        <Head>
-          <title>mads</title>
-          <meta name="description" content="Joseph Madigan's full-stack portfolio" />
-          <link rel="icon" href="/favicon.ico" sizes="any" />
-          <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-          <link rel="shortcut icon" href="/favicon.ico" />
-        </Head>
+    <div className={styles.container}>
+      <Head>
+        <title>mads</title>
+        <meta name="description" content="Joseph Madigan's full-stack portfolio" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+      </Head>
 
-        {/* Header ribbon */}
-        <div style={{ width: '100%', height: '20px', position: 'fixed', top: 0, left: 0, zIndex: 100 }}>
-          <Image src="/header.svg" alt="Header" width={1920} height={20} style={{ width: '100%', height: '20px' }} priority />
-        </div>
-
-        <AppSidebar />
-
-        {/* Endless scroll sections */}
-        <main className={styles.main}>
-          {/* Main sections */}
-          {renderSection(sections.home.content, "home", sections)}
-          {renderSection(sections.about.content, "about")}
-          
-          {/* Projects section with nested sections */}
-          <section id="projects" className={styles.section}>
-            <ReactMarkdown>{sections.projects.content}</ReactMarkdown>
-            {sections.projects.subSections && Object.entries(sections.projects.subSections).map(([name, content]) => (
-              renderProjectSection(name, content)
-            ))}
-            <Image src="/divider.svg" alt="Section divider" width={1920} height={4} style={{ width: '100%', height: '2px' }} />
-          </section>
-        </main>
-
-        {expandedImage && (
-          <ImageModal
-            src={expandedImage.src}
-            alt={expandedImage.alt}
-            onClose={() => setExpandedImage(null)}
-          />
-        )}
+      {/* Header ribbon */}
+      <div style={{ width: '100%', height: '20px', position: 'fixed', top: 0, left: 0, zIndex: 100 }}>
+        <Image src="/header.svg" alt="Header" width={1920} height={20} style={{ width: '100%', height: '20px' }} priority />
       </div>
-    </SidebarProvider>
+
+      <AppSidebar />
+
+      {/* Endless scroll sections */}
+      <main className={styles.main}>
+        {/* Main sections */}
+        {renderSection(sections.home.content, "home", sections)}
+        {renderSection(sections.about.content, "about")}
+        
+        {/* Projects section with nested sections */}
+        <section id="projects" className={styles.section}>
+          <ReactMarkdown>{sections.projects.content}</ReactMarkdown>
+          {sections.projects.subSections && Object.entries(sections.projects.subSections).map(([name, content]) => (
+            renderProjectSection(name, content)
+          ))}
+          <Image src="/divider.svg" alt="Section divider" width={1920} height={4} style={{ width: '100%', height: '2px' }} />
+        </section>
+      </main>
+
+      {expandedImage && (
+        <ImageModal
+          src={expandedImage.src}
+          alt={expandedImage.alt}
+          onClose={() => setExpandedImage(null)}
+        />
+      )}
+    </div>
   );
 };
 

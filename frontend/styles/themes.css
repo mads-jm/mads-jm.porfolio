@@ -1,0 +1,90 @@
+@tailwind base;
+
+@layer base {
+  :root {
+    /* Base colors */
+    --background: 0 0% 100%;
+    --foreground: 207 38% 25%;
+    
+    /* Theme colors */
+    --charcoal: 207 38% 25%;
+    --light-blue: 186 25% 66%;
+    --pale-purple: 309 51% 90%;
+    --coyote: 38 31% 35%;
+    --flame: 17 76% 49%;
+    
+    /* Component colors */
+    --card: 0 0% 100%;
+    --card-foreground: 207 38% 25%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 207 38% 25%;
+    --primary: 207 38% 25%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 186 25% 66%;
+    --secondary-foreground: 207 38% 25%;
+    --muted: 309 51% 90%;
+    --muted-foreground: 38 31% 35%;
+    --accent: 17 76% 49%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 186 25% 66%;
+    --input: 186 25% 66%;
+    --ring: 207 38% 25%;
+    
+    /* Sidebar colors */
+    --sidebar-background: 186 25% 90%;
+    --sidebar-foreground: 207 38% 25%;
+    --sidebar-primary: 207 38% 25%;
+    --sidebar-primary-foreground: 186 25% 66%;;
+    --sidebar-accent: 186 25% 90%;
+    --sidebar-accent-foreground: 207 38% 25%;
+    --sidebar-border: 186 25% 85%;
+    --sidebar-ring: 186 25% 70%;
+    
+    /* Border radius */
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    /* Base colors */
+    --background: 207 38% 10%;
+    --foreground: 0 0% 100%;
+    
+    /* Theme colors */
+    --charcoal: 207 38% 25%;
+    --light-blue: 186 25% 66%;
+    --pale-purple: 309 51% 90%;
+    --coyote: 38 31% 35%;
+    --flame: 17 76% 49%;
+    
+    /* Component colors */
+    --card: 207 38% 10%;
+    --card-foreground: 0 0% 100%;
+    --popover: 207 38% 10%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 0 0% 100%;
+    --primary-foreground: 207 38% 25%;
+    --secondary: 186 25% 66%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 309 51% 90%;
+    --muted-foreground: 38 31% 35%;
+    --accent: 17 76% 49%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 186 25% 66%;
+    --input: 186 25% 66%;
+    --ring: 212.7 26.8% 83.9%;
+    
+    /* Sidebar colors */
+    --sidebar-background: 186 25% 15%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 0 0% 98%;
+    --sidebar-primary-foreground: 207 38% 25%;
+    --sidebar-accent: 186 25% 20%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 186 25% 25%;
+    --sidebar-ring: 186 25% 30%;
+  }
+} 
