@@ -173,7 +173,7 @@ const Home: NextPage<HomeProps> = ({ sections }) => {
         >
           <CarouselContent className="flex -ml-4">
             {images.map((item, index) => (
-              <CarouselItem key={index} className={carouselItemClass}>
+              <CarouselItem key={`image-${item.src}-${index}`} className={carouselItemClass}>
                 <div className="cursor-pointer" onClick={() => handleImageClick(item.src, item.alt)}>
                   <Image 
                     src={item.src} 
@@ -255,6 +255,7 @@ const Home: NextPage<HomeProps> = ({ sections }) => {
     // Project-specific image arrays
     const projectImages: Record<string, { src: string, alt: string, type?: 'image' | 'spotify' }[]> = {
       'EmailEssence': [
+        { src: 'https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjkyi1uoTKvHl3Yc6iN4UeChxIdMXsOJLnf0tP', alt: 'EmailEssence Dashboard', type: 'image' },
         { src: 'https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjUrh23jbW6d9Ra8hBcVYTtwP0Dji5yJs7eES2', alt: 'EmailEssence Screenshot 1', type: 'image' },
         { src: 'https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjprm1QkzGEPjidDz7AUys8ev256YTLbFZocMx', alt: 'EmailEssence Screenshot 2', type: 'image' },
         { src: 'https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjsf8xZS345OyM2j0kCJQ6lcYngt9VFziofvTW', alt: 'EmailEssence Screenshot 3', type: 'image' },
@@ -332,7 +333,7 @@ const Home: NextPage<HomeProps> = ({ sections }) => {
           >
             <CarouselContent className="flex -ml-4">
               {items.map((item, index) => (
-                <CarouselItem key={index} className={carouselItemClass}>
+                <CarouselItem key={`${type}-${item.src}-${index}`} className={carouselItemClass}>
                   {type === 'spotify' ? (
                     <div className="w-full cursor-grab active:cursor-grabbing">
                       <iframe 
