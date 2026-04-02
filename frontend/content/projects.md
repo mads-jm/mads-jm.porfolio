@@ -1,7 +1,8 @@
 # Projects
 
 ### WhatNext
-**A resilient, user-centric music management platform for musical permanence and deep collaboration**  
+**A resilient, user-centric music management platform for musical permanence and deep collaboration** 
+[View Docs](https://whtnxt.madigan.app/)   -   [View Code](https://github.com/mads-jm/WhatNext)  
 November 2025 - Ongoing  
 Stack: TypeScript | Electron | React | RxDB | LibP2P | WebRTC | Spotify API  
 
@@ -28,8 +29,8 @@ Stack: Rust | ratatui | crossterm | Obsidian Local REST API | TOML
 
 ### git-identity
 **Cross-Platform Git Identity Manager with TUI and CLI**  
-[View Documentation](https://github.com/mads-jm/git-identity)   -   [View Code](https://github.com/mads-jm/git-identity)  
-March 2026 - Ongoing  
+[View Code](https://github.com/mads-jm/git-identity)  
+February 2026 - Ongoing  
 Stack: Rust | ratatui | crossterm | clap | serde | YAML  
 
 - Built a standalone TUI and CLI tool for managing multiple GitHub accounts with directory-based switching and SSH aliases
