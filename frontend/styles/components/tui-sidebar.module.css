@@ -1,0 +1,188 @@
+.sidebar {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco', monospace;
+  font-size: 0.82rem;
+  line-height: 1.7;
+  background: hsl(var(--tui-bg));
+  color: hsl(var(--tui-fg));
+  width: 16rem;
+  height: calc(100vh - 48px);
+  position: fixed;
+  top: 24px;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid hsl(var(--tui-cyan) / 0.3);
+  z-index: 40;
+  outline: none;
+  user-select: none;
+}
+
+/* Header: ▽ mads */
+.header {
+  padding: 0.75rem 0.75rem 0.5rem;
+  color: hsl(var(--tui-cyan));
+  white-space: nowrap;
+}
+
+.brand {
+  margin-right: 0.4rem;
+}
+
+/* Divider line ├───┤ */
+.divider {
+  color: hsl(var(--tui-dark-gray));
+  white-space: pre;
+  overflow: hidden;
+  padding: 0 0.75rem;
+  line-height: 1.2;
+}
+
+/* Navigation list */
+.navList {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.25rem 0;
+  list-style: none;
+  margin: 0;
+}
+
+.navItem {
+  display: block;
+  padding: 0.1rem 0.75rem;
+  color: hsl(var(--tui-gray));
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  transition: none;
+}
+
+.navItem:hover {
+  color: hsl(var(--tui-fg));
+  background: hsl(var(--tui-dark-gray));
+}
+
+.navItemActive {
+  color: hsl(var(--tui-cyan));
+  background: hsl(var(--tui-selection));
+}
+
+.navItemFocused {
+  outline: 1px solid hsl(var(--tui-cyan));
+  outline-offset: -1px;
+}
+
+.selector {
+  color: hsl(var(--tui-cyan));
+  margin-right: 0.15rem;
+  display: inline-block;
+  width: 1.6em;
+}
+
+.selectorHidden {
+  visibility: hidden;
+}
+
+.childPrefix {
+  color: hsl(var(--tui-dark-gray));
+  margin-right: 0.25rem;
+  margin-left: 1.6em;
+}
+
+.badge {
+  color: hsl(var(--tui-gray));
+  margin-left: 0.4rem;
+  font-size: 0.75rem;
+}
+
+.groupToggle {
+  composes: navItem;
+  display: flex;
+  align-items: center;
+}
+
+/* Footer key hints */
+.footer {
+  padding: 0.4rem 0.75rem;
+  color: hsl(var(--tui-yellow));
+  font-size: 0.72rem;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.hintKey {
+  color: hsl(var(--tui-yellow));
+}
+
+.hintLabel {
+  color: hsl(var(--tui-gray));
+  margin-right: 0.75rem;
+}
+
+/* Mobile trigger button */
+.mobileTrigger {
+  display: none;
+  position: fixed;
+  bottom: calc(24px + 0.75rem);
+  right: 1.25rem;
+  z-index: 50;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco', monospace;
+  font-size: 0.82rem;
+  background: hsl(var(--tui-bg));
+  color: hsl(var(--tui-cyan));
+  border: 1px solid hsl(var(--tui-dark-gray));
+  padding: 0.35rem 0.6rem;
+  cursor: pointer;
+  border-radius: 0;
+  line-height: 1;
+}
+
+/* Mobile panel */
+.mobileBackdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: hsl(var(--tui-bg) / 0.7);
+  z-index: 49;
+}
+
+.mobilePanel {
+  display: none;
+  position: fixed;
+  bottom: 24px;
+  left: 0;
+  right: 0;
+  max-height: 60vh;
+  background: hsl(var(--tui-bg));
+  border-top: 1px solid hsl(var(--tui-dark-gray));
+  z-index: 50;
+  flex-direction: column;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco', monospace;
+  font-size: 0.82rem;
+  line-height: 1.7;
+  color: hsl(var(--tui-fg));
+  outline: none;
+  overflow-y: auto;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+
+  .mobileTrigger {
+    display: block;
+  }
+
+  .mobileBackdrop.open {
+    display: block;
+  }
+
+  .mobilePanel.open {
+    display: flex;
+  }
+}

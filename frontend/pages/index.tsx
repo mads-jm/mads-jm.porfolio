@@ -2,13 +2,14 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import { AppSidebar } from "../components/AppSidebar"
+import { TuiSidebar } from "../components/TuiSidebar"
 import ReactMarkdown from 'react-markdown'
 import { getMarkdownContent } from '../lib/markdown'
 import { Contact } from '../components/Contact'
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, CarouselDots, CarouselCounter } from '@/components/ui/carousel'
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { ButtonLink } from '../components/ButtonLink'
+import { TopBar, BottomBar } from '../components/StatusBars'
 import type { Components } from 'react-markdown'
 
 interface SectionData {
@@ -40,27 +41,14 @@ interface CustomComponents extends Components {
 const markdownComponents: CustomComponents = {
   ProjectLink: ButtonLink,
   a: ({ href, children }) => {
-    if (href?.includes('github.com')) {
-      return (
-        <ButtonLink href={href} type="github">
-          {children}
-        </ButtonLink>
-      )
-    }
-    if (href?.includes('madigan.app')) {
-      return (
-        <ButtonLink href={href} type="app">
-          {children}
-        </ButtonLink>
-      )
-    }
-    if (href?.includes('docs.google.com')) {
-      return (
-        <ButtonLink href={href} type="resume">
-          {children}
-        </ButtonLink>
-      )
-    }
+    const text = typeof children === "string" ? children : Array.isArray(children) ? children.join("") : String(children ?? "")
+    const lower = text.toLowerCase()
+
+    if (lower.includes("code"))   return <ButtonLink href={href ?? "#"} type="github">{children}</ButtonLink>
+    if (lower.includes("app"))    return <ButtonLink href={href ?? "#"} type="app">{children}</ButtonLink>
+    if (lower.includes("doc"))    return <ButtonLink href={href ?? "#"} type="docs">{children}</ButtonLink>
+    if (lower.includes("resume")) return <ButtonLink href={href ?? "#"} type="resume">{children}</ButtonLink>
+
     return <a href={href}>{children}</a>
   }
 }
@@ -132,7 +120,7 @@ const ImageModal = ({ src, alt, onClose }: { src: string, alt: string, onClose: 
           }}
           onClick={(e) => e.stopPropagation()}
         />
-        <div className="font-mono text-base px-4 py-2 rounded-lg" style={{ color: 'hsl(186 25% 66%)' }}>
+        <div className="font-mono text-base px-4 py-2" style={{ color: 'hsl(var(--tui-gray))' }}>
           {alt}
         </div>
       </div>
@@ -143,6 +131,27 @@ const ImageModal = ({ src, alt, onClose }: { src: string, alt: string, onClose: 
 const Home: NextPage<HomeProps> = ({ sections }) => {
   const [expandedImage, setExpandedImage] = useState<{src: string, alt: string} | null>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [activeSection, setActiveSection] = useState("#home");
+  const [tuiMode, setTuiMode] = useState(true);
+
+  // Restore mode preference on mount
+  useEffect(() => {
+    const saved = localStorage.getItem("site-mode")
+    if (saved === "clean") {
+      setTuiMode(false)
+      document.documentElement.setAttribute("data-mode", "clean")
+    }
+  }, []);
+
+  const toggleMode = useCallback(() => {
+    setTuiMode((prev) => {
+      const next = !prev
+      const mode = next ? "tui" : "clean"
+      document.documentElement.setAttribute("data-mode", mode)
+      localStorage.setItem("site-mode", mode)
+      return next
+    })
+  }, []);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -217,8 +226,10 @@ const Home: NextPage<HomeProps> = ({ sections }) => {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="bg-primary text-primary-foreground border-border carousel-button" />
-          <CarouselNext className="bg-primary text-primary-foreground border-border carousel-button" />
+          <CarouselPrevious className="carousel-button" />
+          <CarouselNext className="carousel-button" />
+          <CarouselDots />
+          <CarouselCounter />
         </Carousel>
       </div>
     );
@@ -242,16 +253,16 @@ const Home: NextPage<HomeProps> = ({ sections }) => {
               {content}
             </ReactMarkdown>
           </div>
-          <Image src="/divider.svg" alt="Section divider" width={1920} height={2} style={{ width: '100%', height: '2px' }} />
+          <hr className="tui-divider" />
           {renderCarousel(homeImages)}
-          <Image src="/divider.svg" alt="Section divider" width={1920} height={2} style={{ width: '100%', height: '2px' }} />
+          <hr className="tui-divider" />
 
           <div className="mt-8 w-full max-w-md mx-auto">
             <Contact content={allSections.contact.content} />
           </div>
           
           <ScrollIndicator />
-          <Image src="/divider.svg" alt="Section divider" width={1920} height={4} style={{ width: '100%', height: '4px' }} />
+          <hr className="tui-divider" />
         </section>
       )
     }
@@ -262,13 +273,17 @@ const Home: NextPage<HomeProps> = ({ sections }) => {
             {content}
           </ReactMarkdown>
         </div>
-        <Image src="/divider.svg" alt="Section divider" width={1920} height={4} style={{ width: '100%', height: '4px' }} />
+        <hr className="tui-divider" />
       </section>
     )
   }, [renderCarousel]);
 
+  // Icon style classes per project
+  const tuiIcons = new Set(["Pour", "git-identity"])  // TUI apps — small dark glyphs
+
   const renderProjectSection = useCallback((name: string, content: string) => {
     const iconPath = `/projects/${name.toLowerCase().replaceAll(' ', '')}.ico`;
+    const iconClass = tuiIcons.has(name) ? "project-icon-tui" : "";
     
     // Project-specific image arrays
     const projectImages: Record<string, { src: string, alt: string, type?: 'image' | 'spotify' }[]> = {
@@ -358,7 +373,7 @@ const Home: NextPage<HomeProps> = ({ sections }) => {
                   {type === 'spotify' ? (
                     <div className="w-full cursor-grab active:cursor-grabbing">
                       <iframe
-                        style={{ borderRadius: '12px' }}
+                        style={{ borderRadius: '0px' }}
                         src={item.src}
                         width="100%"
                         height={isMobile ? "152" : "352"}
@@ -396,8 +411,10 @@ const Home: NextPage<HomeProps> = ({ sections }) => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="bg-primary text-primary-foreground border-border carousel-button" />
-            <CarouselNext className="bg-primary text-primary-foreground border-border carousel-button" />
+            <CarouselPrevious className="carousel-button" />
+            <CarouselNext className="carousel-button" />
+            <CarouselDots />
+            <CarouselCounter />
           </Carousel>
         </div>
       );
@@ -405,14 +422,15 @@ const Home: NextPage<HomeProps> = ({ sections }) => {
 
     return (
       <section id={`projects-${name.toLowerCase()}`} className={styles.section}>
-        <Image src="/divider.svg" alt="Section divider" width={1920} height={2} style={{ width: '100%', height: '4px' }} />
+        <hr className="tui-divider" />
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem 0' }}>
-          <div style={{ width: 64, height: 64, position: 'relative' }}>
-            <Image 
-              src={iconPath} 
-              alt={`${name} icon`} 
+          <div style={{ width: 64, height: 64, position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Image
+              src={iconPath}
+              alt={`${name} icon`}
               width={120}
               height={120}
+              className={iconClass}
               style={{ objectFit: 'contain' }}
               priority
             />
@@ -426,7 +444,7 @@ const Home: NextPage<HomeProps> = ({ sections }) => {
         </div>
         {(projectImages[name]?.filter(item => item.type === 'image').length > 0 ||
           projectImages[name]?.filter(item => item.type === 'spotify').length > 0) && (
-          <Image src="/divider.svg" alt="Section divider" width={1920} height={2} style={{ width: '100%', height: '2px' }} />
+          <hr className="tui-divider" />
         )}
         {projectImages[name]?.filter(item => item.type === 'image').length > 0 && (
           <div style={{ padding: '1.5rem 0' }}>
@@ -452,12 +470,10 @@ const Home: NextPage<HomeProps> = ({ sections }) => {
         <link rel="shortcut icon" href="/favicon.ico" />
       </Head>
 
-      {/* Header ribbon */}
-      <div style={{ width: '100%', height: '20px', position: 'fixed', top: 0, left: 0, zIndex: 100 }}>
-        <Image src="/header.svg" alt="Header" width={1920} height={20} style={{ width: '100%', height: '20px' }} priority />
-      </div>
+      <TopBar tuiMode={tuiMode} onToggleMode={toggleMode} />
+      <BottomBar activeSection={activeSection} />
 
-      <AppSidebar />
+      <TuiSidebar onActiveChange={setActiveSection} />
 
       {/* Endless scroll sections */}
       <main className={styles.main}>
@@ -471,7 +487,7 @@ const Home: NextPage<HomeProps> = ({ sections }) => {
           {sections.projects.subSections && Object.entries(sections.projects.subSections).map(([name, content]) => (
             renderProjectSection(name, content)
           ))}
-          <Image src="/divider.svg" alt="Section divider" width={1920} height={4} style={{ width: '100%', height: '2px' }} />
+          <hr className="tui-divider" />
         </section>
       </main>
 

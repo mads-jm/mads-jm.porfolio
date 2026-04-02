@@ -2,11 +2,10 @@
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import '../styles/globals.css'
-import { SidebarProvider } from "@/components/ui/sidebar"
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <SidebarProvider>
+    <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
         <link rel="icon" href="/favicon.ico" />
@@ -17,6 +16,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <meta property="og:type" content="website" />
       </Head>
       <Component {...pageProps} />
-    </SidebarProvider>
+    </>
   )
 }
