@@ -26,14 +26,29 @@ Stack: HTML | JavaScript | Web Audio API
 ```
 
 ### WhatNext
-**Distributed Real-Time Music Queue System**  
-*In Design Phase*  
-Date: April 2025  
-Stack: TypeScript | React Native | Spotify API | WebSocket  
+**Sovereign Music Management Platform**  
+[View App](https://whatnext.madigan.app/)   -   [View Code](https://github.com/mads-jm/WhatNext)  
+November 2025 - Ongoing  
+Stack: TypeScript | Electron | React | RxDB | libp2p | Spotify API  
 ```
-- Designing a collaborative music app that captures the spontaneity of in-person playlist building
-- Implementing distributed real-time music queuing system with eventual consistency
-- Planning offline-first architecture with optimistic updates and state reconciliation
-- Developing turn-based interaction system for fair queue manipulation
-- Integrating social features for comments and reactions
+- Architecting a local-first, peer-to-peer music management platform built on user sovereignty principles
+- Building decentralized P2P collaboration via libp2p with mDNS discovery, Noise encryption, and WebRTC transport
+- Implementing local-first data storage using RxDB with plaintext Markdown/YAML for full user data ownership
+- Building Electron desktop app with React, Zustand, and Vite for a reactive cross-platform experience
+- Integrating Spotify as a progressive enhancement for metadata enrichment and playback control
+- Designing circuit relay infrastructure for NAT traversal and persistent peer connectivity
+```
+
+### Pour
+**Terminal-Native Obsidian Capture Tool**  
+[View App](https://pour.madigan.app/)   -   [View Code](https://github.com/mads-jm/pour)  
+March 2026 - Ongoing  
+Stack: Rust | ratatui | crossterm | Obsidian Local REST API | TOML  
+```
+- Building a frictionless, instant-booting TUI in Rust for structured data capture directly into Obsidian vaults
+- Implementing hybrid transport layer with API-first writes via Obsidian Local REST API and filesystem fallback
+- Designing config-driven module system — fields, paths, and templates all defined in TOML, no hardcoded modules
+- Building vault-sourced dynamic dropdowns with 3-tier fallback: API query → disk scan → cache → freetext
+- Outputting strict Markdown with YAML frontmatter for portable, plaintext-forever data compatible with Dataview
+- Supporting dual write modes: create (new file with frontmatter) and append (under header in daily note)
 ```

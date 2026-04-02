@@ -62,6 +62,7 @@ const items: MenuItem[] = [
       { title: "EmailEssence", url: "#projects-emailessence" },
       { title: "ReverbXR", url: "#projects-reverbxr" },
       { title: "WhatNext", url: "#projects-whatnext" },
+      { title: "Pour", url: "#projects-pour" },
     ],
   },
   {
