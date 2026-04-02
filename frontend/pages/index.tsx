@@ -419,17 +419,24 @@ const Home: NextPage<HomeProps> = ({ sections }) => {
           </div>
           <h2>{name}</h2>
         </div>
-        <div className="react-markdown" style={{ margin: '-1rem 0' }}>
+        <div className="react-markdown project-body" style={{ padding: '0.5rem 0 1.5rem' }}>
           <ReactMarkdown components={markdownComponents}>
             {content}
           </ReactMarkdown>
         </div>
-        <Image src="/divider.svg" alt="Section divider" width={1920} height={2} style={{ width: '100%', height: '2px' }} />
+        {(projectImages[name]?.filter(item => item.type === 'image').length > 0 ||
+          projectImages[name]?.filter(item => item.type === 'spotify').length > 0) && (
+          <Image src="/divider.svg" alt="Section divider" width={1920} height={2} style={{ width: '100%', height: '2px' }} />
+        )}
         {projectImages[name]?.filter(item => item.type === 'image').length > 0 && (
-          renderCarouselContent(projectImages[name].filter(item => item.type === 'image'), 'image')
+          <div style={{ padding: '1.5rem 0' }}>
+            {renderCarouselContent(projectImages[name].filter(item => item.type === 'image'), 'image')}
+          </div>
         )}
         {projectImages[name]?.filter(item => item.type === 'spotify').length > 0 && (
-          renderCarouselContent(projectImages[name].filter(item => item.type === 'spotify'), 'spotify')
+          <div style={{ padding: '1.5rem 0' }}>
+            {renderCarouselContent(projectImages[name].filter(item => item.type === 'spotify'), 'spotify')}
+          </div>
         )}
       </section>
     )
