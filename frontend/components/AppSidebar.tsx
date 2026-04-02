@@ -1,4 +1,4 @@
-import { Calendar, Home, Inbox, Music, Menu, X } from "lucide-react"
+import { FolderGit2, Home, User, Music, Menu, X } from "lucide-react"
 import { useState, useEffect } from "react"
 
 import {
@@ -21,7 +21,6 @@ import {
 import {
   Sheet,
   SheetContent,
-  SheetClose,
 } from "@/components/ui/sheet"
 
 
@@ -52,17 +51,18 @@ const items: MenuItem[] = [
   {
     title: "About",
     url: "#about",
-    icon: Inbox,
+    icon: User,
   },
   {
     title: "Projects",
     url: "#projects",
-    icon: Calendar,
+    icon: FolderGit2,
     subItems: [
+      { title: "Pour", url: "#projects-pour" },
+      { title: "git-identity", url: "#projects-git-identity" },
+      { title: "WhatNext", url: "#projects-whatnext" },
       { title: "EmailEssence", url: "#projects-emailessence" },
       { title: "ReverbXR", url: "#projects-reverbxr" },
-      { title: "WhatNext", url: "#projects-whatnext" },
-      { title: "Pour", url: "#projects-pour" },
     ],
   },
   {
@@ -72,16 +72,23 @@ const items: MenuItem[] = [
   },
 ]
 
-// Input: Menu item and its subitems
+// Input: Menu item, mobile flag, and optional close callback for mobile sheet
 // Output: Rendered menu item with nested structure
-const renderMenuItem = (item: MenuItem, isMobile: boolean) => (
+const renderMenuItem = (item: MenuItem, isMobile: boolean, onClose?: () => void) => (
   <SidebarMenuItem key={item.title}>
     {item.subItems ? (
       <Collapsible className="group/collapsible">
         <CollapsibleTrigger asChild>
           <SidebarMenuButton className="hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
-            <item.icon className="h-4 w-4" />
-            <span>{item.title}</span>
+            {/* Title is also a navigable link; click propagation still opens collapsible */}
+            <a
+              href={item.url}
+              onClick={isMobile ? onClose : undefined}
+              className="flex items-center gap-2 flex-1"
+            >
+              <item.icon className="h-4 w-4" />
+              <span>{item.title}</span>
+            </a>
             {!isMobile && item.title === "Projects" && <SidebarMenuBadge>{item.subItems.length}</SidebarMenuBadge>}
           </SidebarMenuButton>
         </CollapsibleTrigger>
@@ -90,7 +97,7 @@ const renderMenuItem = (item: MenuItem, isMobile: boolean) => (
             {item.subItems.map((subItem) => (
               <SidebarMenuItem key={subItem.title}>
                 <SidebarMenuButton asChild className="hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
-                  <a href={subItem.url}>
+                  <a href={subItem.url} onClick={isMobile ? onClose : undefined}>
                     <span>{subItem.title}</span>
                   </a>
                 </SidebarMenuButton>
@@ -101,7 +108,7 @@ const renderMenuItem = (item: MenuItem, isMobile: boolean) => (
       </Collapsible>
     ) : (
       <SidebarMenuButton asChild className="hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
-        <a href={item.url}>
+        <a href={item.url} onClick={isMobile ? onClose : undefined}>
           <item.icon className="h-4 w-4" />
           <span>{item.title}</span>
         </a>
@@ -156,16 +163,12 @@ export function AppSidebar() {
                   <SidebarGroupLabel>Navigation</SidebarGroupLabel>
                   <SidebarGroupContent>
                     <SidebarMenu className="space-y-2">
-                      {items.map(item => renderMenuItem(item, true))}
+                      {items.map(item => renderMenuItem(item, true, () => setIsMobileMenuOpen(false)))}
                     </SidebarMenu>
                   </SidebarGroupContent>
                 </SidebarGroup>
               </SidebarContent>
             </div>
-            <SheetClose className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-accent-foreground">
-              <X className="h-4 w-4" />
-              <span className="sr-only">Close</span>
-            </SheetClose>
           </SheetContent>
         </Sheet>
       )}

@@ -12,8 +12,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         {/* Open Graph / Discord Embed Tags */}
         <meta property="og:title" content="Joseph Madigan - Software Engineer" />
         <meta property="og:description" content="Former retail management professional turned software engineer. Explore my journey and projects." />
-        <meta property="og:image" content="https://mads-jm-porfolio.vercel.app/favicon.ico" />
-        <meta property="og:url" content="https://mads-jm-porfolio.vercel.app/" />
+        <meta property="og:url" content="https://mads-jm.github.io/" />
         <meta property="og:type" content="website" />
       </Head>
       <Component {...pageProps} />

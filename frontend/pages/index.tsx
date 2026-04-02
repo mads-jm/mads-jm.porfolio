@@ -7,7 +7,7 @@ import ReactMarkdown from 'react-markdown'
 import { getMarkdownContent } from '../lib/markdown'
 import { Contact } from '../components/Contact'
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { ButtonLink } from '../components/ButtonLink'
 import type { Components } from 'react-markdown'
 
@@ -77,7 +77,6 @@ const ScrollIndicator = () => {
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         className={styles.scrollArrow}
-        color="black"
       >
         <path
           d="M12 5L12 19M12 19L19 12M12 19L5 12"
@@ -94,8 +93,27 @@ const ScrollIndicator = () => {
 // Input: Image source and alt text
 // Output: Modal component for expanded image view
 const ImageModal = ({ src, alt, onClose }: { src: string, alt: string, onClose: () => void }) => {
+  const overlayRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    overlayRef.current?.focus();
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
+
   return (
-    <div 
+    <div
+      ref={overlayRef}
+      role="dialog"
+      aria-modal="true"
+      aria-label={`Expanded image: ${alt}`}
+      tabIndex={-1}
       className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center cursor-pointer"
       onClick={onClose}
     >
@@ -105,7 +123,7 @@ const ImageModal = ({ src, alt, onClose }: { src: string, alt: string, onClose: 
           alt={alt}
           width={1200}
           height={800}
-          style={{ 
+          style={{
             width: 'auto',
             height: 'auto',
             maxWidth: '90vw',
@@ -167,24 +185,32 @@ const Home: NextPage<HomeProps> = ({ sections }) => {
         padding: '0 1rem',
         margin: '0 auto'
       }}>
-        <Carousel 
+        <Carousel
           opts={carouselOptions}
           className="w-full"
+          aria-label="Personal photos"
         >
           <CarouselContent className="flex -ml-4">
             {images.map((item, index) => (
               <CarouselItem key={`image-${item.src}-${index}`} className={carouselItemClass}>
-                <div className="cursor-pointer" onClick={() => handleImageClick(item.src, item.alt)}>
-                  <Image 
-                    src={item.src} 
-                    alt={item.alt} 
-                    width={480} 
-                    height={270} 
-                    style={{ 
-                      width: 'auto', 
+                <div
+                  className="cursor-pointer"
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`View ${item.alt} full size`}
+                  onClick={() => handleImageClick(item.src, item.alt)}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleImageClick(item.src, item.alt); } }}
+                >
+                  <Image
+                    src={item.src}
+                    alt={item.alt}
+                    width={480}
+                    height={270}
+                    style={{
+                      width: 'auto',
                       height: isMobile ? '250px' : '330px',
-                      maxWidth: '100%' 
-                    }} 
+                      maxWidth: '100%'
+                    }}
                     className="object-cover transition-all hover:scale-105"
                   />
                 </div>
@@ -229,14 +255,6 @@ const Home: NextPage<HomeProps> = ({ sections }) => {
         </section>
       )
     }
-    if (id === 'contact') {
-      return (
-        <section id={id} className={styles.section}>
-          <Contact content={content} />
-          <Image src="/divider.svg" alt="Section divider" width={1920} height={4} style={{ width: '100%', height: '4px' }} />
-        </section>
-      )
-    }
     return (
       <section id={id} className={styles.section}>
         <div className="react-markdown">
@@ -250,7 +268,7 @@ const Home: NextPage<HomeProps> = ({ sections }) => {
   }, [renderCarousel]);
 
   const renderProjectSection = useCallback((name: string, content: string) => {
-    const iconPath = `/projects/${name.toLowerCase().replace(' ', '')}.ico`;
+    const iconPath = `/projects/${name.toLowerCase().replaceAll(' ', '')}.ico`;
     
     // Project-specific image arrays
     const projectImages: Record<string, { src: string, alt: string, type?: 'image' | 'spotify' }[]> = {
@@ -268,6 +286,7 @@ const Home: NextPage<HomeProps> = ({ sections }) => {
         { src: 'https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjWVxqg04upgRSyMNarcl0H3nB1tjEIfLoexVY', alt: 'ReverbXR 2D Prototype', type: 'image' },
       ],
       'Pour': [],
+      'git-identity': [],
       'WhatNext': [
         { 
           src: 'https://open.spotify.com/embed/playlist/2kpswjk4hzWHQwpci2PUnc?utm_source=generator', 
@@ -320,48 +339,56 @@ const Home: NextPage<HomeProps> = ({ sections }) => {
       const carouselItemClass = `${isMobile ? 'basis-full' : type === 'spotify' ? 'basis-1/2' : 'basis-1/3'} flex justify-center pl-4`;
 
       return (
-        <div style={{ 
-          display: 'flex', 
-          flexDirection: 'column', 
-          alignItems: 'center', 
-          width: '95%', 
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          width: '95%',
           padding: '0 1rem',
           margin: '0 auto'
         }}>
-          <Carousel 
+          <Carousel
             opts={carouselOptions}
             className="w-full"
+            aria-label={type === 'spotify' ? `${name} playlists` : `${name} screenshots`}
           >
             <CarouselContent className="flex -ml-4">
               {items.map((item, index) => (
                 <CarouselItem key={`${type}-${item.src}-${index}`} className={carouselItemClass}>
                   {type === 'spotify' ? (
                     <div className="w-full cursor-grab active:cursor-grabbing">
-                      <iframe 
-                        style={{ borderRadius: '12px' }} 
-                        src={item.src} 
-                        width="100%" 
-                        height={isMobile ? "152" : "352"} 
-                        frameBorder="0" 
-                        allowFullScreen 
-                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                      <iframe
+                        style={{ borderRadius: '12px' }}
+                        src={item.src}
+                        width="100%"
+                        height={isMobile ? "152" : "352"}
+                        frameBorder="0"
+                        allowFullScreen
+                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                         loading="lazy"
                         draggable="true"
                         className="transition-all hover:scale-105"
                       />
                     </div>
                   ) : (
-                    <div className="cursor-pointer" onClick={() => handleImageClick(item.src, item.alt)}>
-                      <Image 
-                        src={item.src} 
-                        alt={item.alt} 
-                        width={480} 
-                        height={270} 
-                        style={{ 
-                          width: 'auto', 
+                    <div
+                      className="cursor-pointer"
+                      role="button"
+                      tabIndex={0}
+                      aria-label={`View ${item.alt} full size`}
+                      onClick={() => handleImageClick(item.src, item.alt)}
+                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleImageClick(item.src, item.alt); } }}
+                    >
+                      <Image
+                        src={item.src}
+                        alt={item.alt}
+                        width={480}
+                        height={270}
+                        style={{
+                          width: 'auto',
                           height: isMobile ? '250px' : '330px',
-                          maxWidth: '100%' 
-                        }} 
+                          maxWidth: '100%'
+                        }}
                         className="object-cover transition-all hover:scale-105"
                       />
                     </div>
@@ -392,7 +419,7 @@ const Home: NextPage<HomeProps> = ({ sections }) => {
           </div>
           <h2>{name}</h2>
         </div>
-        <div className="react-markdown" style={{ padding: '-1rem 0' }}>
+        <div className="react-markdown" style={{ margin: '-1rem 0' }}>
           <ReactMarkdown components={markdownComponents}>
             {content}
           </ReactMarkdown>

@@ -1,16 +1,45 @@
 # Projects
 
+### Pour
+**Terminal-Native Obsidian Capture Tool**  
+[View App](https://pour.madigan.app/)   -   [View Code](https://github.com/mads-jm/pour)  
+March 2026 - Ongoing  
+Stack: Rust | ratatui | crossterm | Obsidian Local REST API | TOML  
+```
+- Building a frictionless, instant-booting TUI in Rust for structured data capture directly into Obsidian vaults
+- Implementing hybrid transport layer with API-first writes via Obsidian Local REST API and filesystem fallback
+- Designing config-driven module system — fields, paths, and templates all defined in TOML, no hardcoded modules
+- Building vault-sourced dynamic dropdowns with 3-tier fallback: API query → disk scan → cache → freetext
+- Outputting strict Markdown with YAML frontmatter for portable, plaintext-forever data compatible with Dataview
+- Supporting dual write modes: create (new file with frontmatter) and append (under header in daily note)
+```
+
+### git-identity
+**Cross-Platform Git Identity Manager with TUI and CLI**  
+[View Documentation](https://github.com/mads-jm/git-identity)   -   [View Code](https://github.com/mads-jm/git-identity)  
+March 2026 - Ongoing  
+Stack: Rust | ratatui | crossterm | clap | serde | YAML  
+```
+- Built a standalone TUI and CLI tool for managing multiple GitHub accounts with directory-based switching and SSH aliases
+- Implemented non-destructive config generation using a managed-block pattern that preserves user content in ~/.gitconfig and ~/.ssh/config
+- Designed a layered architecture separating pure business logic (core) from I/O, UI, and a consent-gated permissions system
+- Built an interactive TUI with ratatui featuring account management, health validation, and clone URL conversion screens
+- Engineered cross-platform support (Windows, macOS, Linux) with atomic file writes, backup creation, and dry-run mode
+- Created an interactive setup wizard for zero-friction onboarding of new machines
+```
+
 ### WhatNext
 **A resilient, user-centric music management platform for musical permanence and deep collaboration**  
-*In Design Phase*  
-Date: November 2025  
-Stack: TypeScript | Electron | React | RxDB | LibP2P | WebRTC | Spotify API
+November 2025 - Ongoing  
+Stack: TypeScript | Electron | React | RxDB | LibP2P | WebRTC | Spotify API  
 ```
-- Architecting a system centered on User Sovereignty, giving users complete ownership and control over their musical lives.
-- Prioritizing a Local-First Data model where the user's local database is the absolute source of truth, ensuring the app is fully functional offline.
-- Building decentralized, real-time collaboration and social features on a Peer-to-Peer Network (WebRTC).
-- Storing all core user data in a transparent, user-accessible Plaintext Data Format (Structured Markdown) to ensure longevity and interoperability.
-- Designing an extensible and resilient platform, inspired by tools like Obsidian and Roon, with a long-term goal of a community-driven Plugin Architecture.
+- Built a local-first Electron desktop app with a Coordinator Model — one user connects to Spotify, imports playlists, and opens a P2P session that friends join with zero OAuth friction
+- Implemented real-time P2P networking with libp2p featuring mDNS discovery, Noise encryption, Yamux multiplexing, and RxDB replication over custom protocols
+- Engineered remote connectivity via circuit relay server and DCUtR for NAT traversal, enabling sessions across networks
+- Developed collaborative session features including co-host model, playback mutex, turn-taking, reactions, and presence indicators
+- Designed an import adapter architecture abstracting streaming services into a canonical format, with Spotify as the first adapter
+- Built a companion client enabling phone/browser session viewing alongside the desktop app
+- Storing all user data in plaintext Structured Markdown with YAML frontmatter for full data sovereignty and interoperability
 ```
 
 ### EmailEssence
@@ -36,18 +65,4 @@ Stack: HTML | JavaScript | Web Audio API
 - Developed a web application for real-time audio processing and 3D visualization using Web Audio API and A-Frame
 - Designed and implemented a modular architecture for managing audio processor states
 - Handled microphone input and audio file processing
-```
-
-### Pour
-**Terminal-Native Obsidian Capture Tool**  
-[View App](https://pour.madigan.app/)   -   [View Code](https://github.com/mads-jm/pour)  
-March 2026 - Ongoing  
-Stack: Rust | ratatui | crossterm | Obsidian Local REST API | TOML  
-```
-- Building a frictionless, instant-booting TUI in Rust for structured data capture directly into Obsidian vaults
-- Implementing hybrid transport layer with API-first writes via Obsidian Local REST API and filesystem fallback
-- Designing config-driven module system — fields, paths, and templates all defined in TOML, no hardcoded modules
-- Building vault-sourced dynamic dropdowns with 3-tier fallback: API query → disk scan → cache → freetext
-- Outputting strict Markdown with YAML frontmatter for portable, plaintext-forever data compatible with Dataview
-- Supporting dual write modes: create (new file with frontmatter) and append (under header in daily note)
 ```
