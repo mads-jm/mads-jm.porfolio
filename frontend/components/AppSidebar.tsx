@@ -58,9 +58,9 @@ const items: MenuItem[] = [
     url: "#projects",
     icon: FolderGit2,
     subItems: [
+      { title: "WhatNext", url: "#projects-whatnext" },
       { title: "Pour", url: "#projects-pour" },
       { title: "git-identity", url: "#projects-git-identity" },
-      { title: "WhatNext", url: "#projects-whatnext" },
       { title: "EmailEssence", url: "#projects-emailessence" },
       { title: "ReverbXR", url: "#projects-reverbxr" },
     ],

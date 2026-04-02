@@ -8,6 +8,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <SidebarProvider>
       <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
         <link rel="icon" href="/favicon.ico" />
         {/* Open Graph / Discord Embed Tags */}
         <meta property="og:title" content="Joseph Madigan - Software Engineer" />
