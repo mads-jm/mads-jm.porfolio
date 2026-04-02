@@ -15,7 +15,7 @@ Stack: TypeScript | Electron | React | RxDB | LibP2P | WebRTC | Spotify API
 
 ### Pour
 **Terminal-Native Obsidian Capture Tool**  
-[View App](https://pour.madigan.app/)   -   [View Code](https://github.com/mads-jm/pour)  
+[View Docs](https://pour.madigan.app/)   -   [View Code](https://github.com/mads-jm/pour)  
 March 2026 - Ongoing  
 Stack: Rust | ratatui | crossterm | Obsidian Local REST API | TOML  
 

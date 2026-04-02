@@ -1,0 +1,113 @@
+/* Shared bar base */
+.topBar,
+.bottomBar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.75rem;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco', monospace;
+  font-size: 0.72rem;
+  line-height: 1;
+  background: hsl(var(--tui-bg));
+  border-color: hsl(var(--tui-cyan) / 0.3);
+  z-index: 100;
+  user-select: none;
+}
+
+/* Top bar — polybar style */
+.topBar {
+  top: 0;
+  border-bottom: 1px solid hsl(var(--tui-dark-gray));
+}
+
+/* Bottom bar — tmux style */
+.bottomBar {
+  bottom: 0;
+  border-top: 1px solid hsl(var(--tui-dark-gray));
+}
+
+/* Layout groups */
+.topLeft,
+.topRight,
+.bottomLeft,
+.bottomRight {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Brand */
+.brand {
+  color: hsl(var(--tui-cyan));
+}
+
+.brandName {
+  color: hsl(var(--tui-cyan));
+  font-weight: 600;
+}
+
+/* Info text */
+.info {
+  color: hsl(var(--tui-gray));
+}
+
+/* Separator pipe */
+.separator {
+  color: hsl(var(--tui-dark-gray));
+}
+
+/* Clock */
+.clock {
+  color: hsl(var(--tui-gray));
+}
+
+/* Mode toggle button */
+.modeToggle {
+  background: none;
+  border: none;
+  color: hsl(var(--tui-yellow));
+  font: inherit;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.15s;
+}
+
+.modeToggle:hover {
+  color: hsl(var(--tui-cyan));
+}
+
+/* Section path (bottom left) */
+.sectionPath {
+  color: hsl(var(--tui-cyan));
+}
+
+/* Key hints (bottom right) */
+.hintKey {
+  color: hsl(var(--tui-yellow));
+}
+
+.hintLabel {
+  color: hsl(var(--tui-gray));
+  margin-right: 0.25rem;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .topBar {
+    padding: 0 0.5rem;
+  }
+
+  .bottomBar {
+    padding: 0 0.5rem;
+    /* Push above the mobile nav trigger */
+    bottom: 0;
+  }
+
+  .bottomRight {
+    display: none;
+  }
+}

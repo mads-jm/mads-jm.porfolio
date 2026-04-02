@@ -4,6 +4,8 @@ import animate from "tailwindcss-animate";
 export default {
     darkMode: ["class"],
     content: [
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
@@ -47,19 +49,17 @@ export default {
   			ring: 'hsl(var(--ring))',
   			charcoal: 'hsl(var(--charcoal))',
   			'light-blue': 'hsl(var(--light-blue))',
-  			'pale-purple': 'hsl(var(--pale-purple))',
   			coyote: 'hsl(var(--coyote))',
   			flame: 'hsl(var(--flame))',
-  			sidebar: {
-  				DEFAULT: 'hsl(var(--sidebar-background))',
-  				foreground: 'hsl(var(--sidebar-foreground))',
-  				primary: 'hsl(var(--sidebar-primary))',
-  				'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-  				accent: 'hsl(var(--sidebar-accent))',
-  				'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-  				border: 'hsl(var(--sidebar-border))',
-  				ring: 'hsl(var(--sidebar-ring))'
-  			}
+  			tui: {
+  				bg: 'hsl(var(--tui-bg))',
+  				fg: 'hsl(var(--tui-fg))',
+  				cyan: 'hsl(var(--tui-cyan))',
+  				yellow: 'hsl(var(--tui-yellow))',
+  				gray: 'hsl(var(--tui-gray))',
+  				'dark-gray': 'hsl(var(--tui-dark-gray))',
+  				selection: 'hsl(var(--tui-selection))',
+  			},
   		},
   		borderRadius: {
   			lg: 'var(--radius)',

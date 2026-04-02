@@ -44,10 +44,10 @@ export function Contact({ content }: { content: string }) {
 
   return (
     <div className="flex flex-col gap-8" style={{ padding: '1rem 0' }}>
-      <div className="prose dark:prose-invert max-w-none pt-6">
+      <div className="max-w-none pt-6 react-markdown">
         <ReactMarkdown>{description}</ReactMarkdown>
       </div>
-      
+
       <div className="flex flex-col gap-4 pt-4">
         {contacts.map(({ type, value }) => {
           const config = contactConfig[type]
@@ -61,11 +61,11 @@ export function Contact({ content }: { content: string }) {
           } : {}
 
           return (
-            <div key={type} className="flex items-center gap-2">
-              <Icon className="h-5 w-5" />
-              <a 
+            <div key={type} className="flex items-center gap-2 font-mono text-sm">
+              <Icon className="h-4 w-4 text-tui-cyan" />
+              <a
                 href={href}
-                className="hover:text-primary transition-colors"
+                className="text-tui-fg hover:text-tui-cyan transition-colors"
                 {...externalProps}
               >
                 {value}
