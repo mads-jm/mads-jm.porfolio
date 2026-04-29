@@ -279,7 +279,7 @@ const Home: NextPage<HomeProps> = ({ sections }) => {
   }, [renderCarousel]);
 
   // Icon style classes per project
-  const tuiIcons = new Set(["Pour", "git-identity"])  // TUI apps — small dark glyphs
+  const tuiIcons = new Set(["Pour", "seed", "git-identity"])  // TUI apps — small dark glyphs
 
   const renderProjectSection = useCallback((name: string, content: string) => {
     const iconPath = `/projects/${name.toLowerCase().replaceAll(' ', '')}.ico`;

@@ -20,7 +20,9 @@ const NAV_ITEMS: NavItem[] = [
     children: [
       { label: "whatnext", hash: "#projects-whatnext" },
       { label: "pour", hash: "#projects-pour" },
+      { label: "seed", hash: "#projects-seed" },
       { label: "git-identity", hash: "#projects-git-identity" },
+      { label: "digest", hash: "#projects-digest" },
       { label: "emailessence", hash: "#projects-emailessence" },
       { label: "reverbxr", hash: "#projects-reverbxr" },
     ],
@@ -171,7 +173,7 @@ export function TuiSidebar({ onActiveChange }: TuiSidebarProps = {}) {
   useEffect(() => {
     const sectionIds = [
       "home", "about", "projects",
-      "projects-whatnext", "projects-pour", "projects-git-identity",
+      "projects-whatnext", "projects-pour", "projects-seed", "projects-git-identity",
       "projects-emailessence", "projects-reverbxr",
     ]
     const sections = sectionIds

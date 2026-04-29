@@ -15,17 +15,34 @@ Stack: TypeScript | Electron | React | RxDB | LibP2P | WebRTC | Spotify API
 - Storing all user data in plaintext Structured Markdown with YAML frontmatter for full data sovereignty and interoperability
 
 ### Pour
-**Terminal-Native Obsidian Capture Tool**  
+**Terminal-Native Capture Tool with Mobile PWA Companion**  
 [View Docs](https://pour.madigan.app/)  -  [View Code](https://github.com/mads-jm/pour)  
 March 2026 - Ongoing  
-Stack: Rust | ratatui | crossterm | Obsidian Local REST API | TOML  
+Stack: Rust | ratatui | crossterm | axum | tokio | rust-embed | Service Worker | IndexedDB | TOML  
 
-- Building a frictionless, instant-booting TUI in Rust for structured data capture directly into Obsidian vaults
-- Implementing hybrid transport layer with API-first writes via Obsidian Local REST API and filesystem fallback
-- Designing config-driven module system — fields, paths, and templates all defined in TOML, no hardcoded modules
-- Building vault-sourced dynamic dropdowns with 3-tier fallback: API query → disk scan → cache → freetext
-- Outputting strict Markdown with YAML frontmatter for portable, plaintext-forever data compatible with Dataview
-- Supporting dual write modes: create (new file with frontmatter) and append (under header in daily note)
+- Built a frictionless, instant-booting TUI in Rust for structured data capture into any Markdown folder, with first-class Obsidian vault support
+- Engineered a hybrid transport layer with API-first writes via Obsidian Local REST API and automatic filesystem fallback so capture never blocks
+- Designed a fully config-driven module system — modules, fields, paths, templates, and conditional `show_when` visibility all declared in TOML with no hardcoded behavior
+- Implemented vault-sourced dynamic dropdowns with a 3-tier fallback chain (API → disk scan → cache → freetext) that renders instantly from cache while refreshing in the background
+- Shipped a contract-first mobile PWA companion (`pour serve`) — embedded in the binary via `rust-embed`, served over LAN with QR-code pairing, constant-time token auth, and per-module opt-out
+- Built an offline-first capture path on the PWA — IndexedDB queue with idempotency keys, service worker app-shell cache, FIFO drain on reconnect, and synthetic-202 wire shape negotiated as a ratified contract amendment
+- Designed a sub-form overlay system that captures structured frontmatter for novel `dynamic_select` values inline (e.g. logging a coffee with a bean that doesn't exist yet), preserving the keyboard-first capture flow
+- Engineered a layered preset system — per-module presets with hierarchical drilldown picker (`method × bean × intent`), per-field presets for repeatable composite arrays like brew recipes, and atomic JSON persistence
+- Maintaining 783 passing tests across config, transport, server, PWA contract surface, and TUI rendering — Phase 2 PWA milestone closed out April 2026 across four parallel architect streams
+
+### seed
+**Local-First TUI Wellness Companion with a Generative Mandala**  
+[View Docs](https://seed.madigan.app/)  -  [View Code](https://github.com/mads-jm/seed)  
+April 2026 - Ongoing  
+Stack: Rust | tokio | ratatui | crossterm | interprocess | notify-rust | chrono  
+
+- Built an event-sourced workspace in Rust (3 crates) — a pure domain core with no I/O, a writer daemon that owns mutable state, and a TUI client that mirrors state via length-prefixed JSON over local sockets
+- Designed an append-only event log with periodic snapshots — daemon replays events past the snapshot's skip count on boot, persisting every 100 events or 5 minutes
+- Implemented cross-platform IPC via `interprocess` (Unix abstract socket / Windows named pipe) with per-connection mpsc routing and broadcast fan-out for state diffs
+- Engineered single-instance daemon lifecycle: socket-probe locking with stale-socket recovery, graceful Ctrl-C drain that flushes a final snapshot before exit
+- Built a generative mandala renderer combining braille (core), block/half-block (petals), and box-drawing (spokes) — per-cell truecolor with 256-color quantization fallback, locked by a byte-compared golden snapshot
+- Designed a versioned wire schema where unknown event kinds round-trip via `Event::Unknown` so forward-compatible tooling never silently loses data
+- Modeled an OSRS-style 1-99 XP curve across nine wellness traits with SEED → ZENITH prestige tiers, driving mandala evolution from sparse seed to full bloom
 
 ### git-identity
 **Cross-Platform Git Identity Manager with TUI and CLI**  
@@ -40,10 +57,23 @@ Stack: Rust | ratatui | crossterm | clap | serde | YAML
 - Engineered cross-platform support (Windows, macOS, Linux) with atomic file writes, backup creation, and dry-run mode
 - Created an interactive setup wizard for zero-friction onboarding of new machines
 
+### Digest
+**Local-First AI Email Summarizer**  
+[View Docs](https://digest.madigan.app/)  -  [View Code](https://github.com/mads-jm/digest)  
+March 2026 - Ongoing  
+Stack: TypeScript | Electron | React | Python | FastAPI | SQLite | aiosqlite  
+
+- Forked EmailEssence's proven backend into a local-first Electron desktop app — no cloud deployment, no remote database
+- Built a FastAPI sidecar spawned as a subprocess by Electron, communicating via localhost HTTP with typed IPC bridging all renderer-to-backend calls
+- Replaced MongoDB with SQLite (aiosqlite) for fully local data storage
+- Implemented Electron-native OAuth 2.0 with tokens secured in OS keychain via safeStorage — no JWT in localStorage, no token storage in the database
+- Designed a pluggable AI summarization provider system supporting local inference (Ollama, llama.cpp, LM Studio) alongside cloud providers (OpenAI, Gemini, OpenRouter)
+- Packaged with electron-builder bundling the Python backend via PyInstaller so end users need no separate Python install
+
 ### EmailEssence
-**Email Productivity Tool**  
+**Email Productivity Tool — Capstone Project**  
 [View App](https://email.madigan.app/)   -   [View Code](https://github.com/EmailEssence/EmailEssence.github.io)  
-October 2024 - Ongoing  
+October 2024 - June 2025  
 Stack: JavaScript | Python | OpenRouter API  
 
 - Architected a modular backend with clear separation between routers, services, and providers, following SOLID principles
