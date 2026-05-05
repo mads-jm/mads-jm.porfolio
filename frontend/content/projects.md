@@ -17,7 +17,7 @@ Stack: TypeScript | Electron | React | RxDB | LibP2P | WebRTC | Spotify API
 ### Pour
 **Terminal-Native Capture Tool with Mobile PWA Companion**  
 [View Docs](https://pour.madigan.app/)  -  [View Code](https://github.com/mads-jm/pour)  
-March 2026 - Ongoing  
+March 2026 - Ongoing (v1.0.0 shipped May 2026)  
 Stack: Rust | ratatui | crossterm | axum | tokio | rust-embed | Service Worker | IndexedDB | TOML  
 
 - Built a frictionless, instant-booting TUI in Rust for structured data capture into any Markdown folder, with first-class Obsidian vault support
@@ -28,7 +28,9 @@ Stack: Rust | ratatui | crossterm | axum | tokio | rust-embed | Service Worker |
 - Built an offline-first capture path on the PWA — IndexedDB queue with idempotency keys, service worker app-shell cache, FIFO drain on reconnect, and synthetic-202 wire shape negotiated as a ratified contract amendment
 - Designed a sub-form overlay system that captures structured frontmatter for novel `dynamic_select` values inline (e.g. logging a coffee with a bean that doesn't exist yet), preserving the keyboard-first capture flow
 - Engineered a layered preset system — per-module presets with hierarchical drilldown picker (`method × bean × intent`), per-field presets for repeatable composite arrays like brew recipes, and atomic JSON persistence
-- Maintaining 783 passing tests across config, transport, server, PWA contract surface, and TUI rendering — Phase 2 PWA milestone closed out April 2026 across four parallel architect streams
+- Sealed the v1.0.0 foundation across decomposition, lock-in, and hardening — collapsed 8 god-modules behind a focused module tree, 18 ad-hoc atomic-write blocks behind a single transactional `Config::edit()`, and 3 hand-rolled JSON stores behind a generic `JsonStore<T>` with migration hooks
+- Hardened the write path for the freeze — rejected `..` traversal across all fs entry points, locked Windows atomicity to `MoveFileExW`, char-indexed the textarea cursor for emoji and CJK, escaped strftime tokens in user templates, and surfaced previously-swallowed persistence failures via a status-bar toast
+- Locked the `pub` surface and enforced an 800-LOC file-size CI ratchet at v1.0.0 — 891 passing tests across config, transport, server, PWA contract surface, and TUI rendering, with `cargo clippy -D warnings`, `cargo fmt --check`, and `cargo doc -D warnings` all green
 
 ### seed
 **Local-First TUI Wellness Companion with a Generative Mandala**  
