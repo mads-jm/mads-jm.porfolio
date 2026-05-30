@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import Link from "next/link"
 import styles from "../styles/components/status-bars.module.css"
 
 interface StatusBarsProps {
@@ -28,7 +29,9 @@ export function TopBar({ tuiMode, onToggleMode }: Pick<StatusBarsProps, "tuiMode
         <span className={styles.brand}>▽</span>
         <span className={styles.brandName}>mads</span>
         <span className={styles.separator}>|</span>
-        <span className={styles.info}>portfolio</span>
+        <Link href="/" className={styles.info}>portfolio</Link>
+        <span className={styles.separator}>|</span>
+        <Link href="/writing" className={styles.info}>writing</Link>
       </div>
       <div className={styles.topRight}>
         <button
