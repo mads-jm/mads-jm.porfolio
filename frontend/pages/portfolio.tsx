@@ -25,7 +25,7 @@ const personJsonLd = {
   "@type": "Person",
   name: "Joseph Madigan",
   alternateName: "mads",
-  url: "https://mads-jm.github.io/portfolio",
+  url: "https://home.madigan.app/portfolio",
   jobTitle: "Machine Learning Engineer",
   worksFor: { "@type": "Organization", name: "EdgeRunner AI" },
   knowsAbout: ["Rust", "TypeScript", "Python", "Terminal UIs", "Peer-to-peer systems", "Local-first software"],

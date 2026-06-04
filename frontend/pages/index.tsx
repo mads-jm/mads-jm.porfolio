@@ -22,7 +22,7 @@ const personJsonLd = {
   "@type": "Person",
   name: "Joseph Madigan",
   alternateName: "mads",
-  url: "https://mads-jm.github.io",
+  url: "https://home.madigan.app",
   jobTitle: "Machine Learning Engineer",
   worksFor: { "@type": "Organization", name: "EdgeRunner AI" },
   sameAs: [

@@ -4,7 +4,7 @@ import { TopBar, BottomBar } from "./StatusBars"
 import { useSiteMode } from "../lib/useSiteMode"
 import styles from "../styles/SiteLayout.module.css"
 
-const SITE_URL = "https://mads-jm.github.io"
+const SITE_URL = "https://home.madigan.app"
 const DEFAULT_OG_IMAGE = `${SITE_URL}/header.svg`
 
 interface SiteLayoutProps {
