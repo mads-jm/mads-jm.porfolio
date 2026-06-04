@@ -197,3 +197,18 @@
   color: hsl(var(--tui-gray));
   font-weight: 400;
 }
+
+/* Compact hero: drop the full-viewport height so the next section (career)
+   leads the initial view. */
+.heroCompact {
+  min-height: auto;
+}
+
+/* Inline action row: Resume button next to the contact links. */
+.heroActions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  padding: 1.25rem 0 0;
+}

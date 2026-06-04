@@ -19,8 +19,8 @@ interface WritingIndexProps {
 const WritingIndex: NextPage<WritingIndexProps> = ({ posts, tags, projects }) => {
   return (
     <WritingLayout
-      title="writing · mads"
-      description="Notes, posts, and project devlogs — a digital garden by Joseph Madigan."
+      title="mads | writing"
+      description="Notes, posts, and project devlogs: a digital garden by Joseph Madigan."
       path="writing"
     >
       <header className={styles.pageHeader}>

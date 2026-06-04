@@ -8,8 +8,10 @@ interface ContactConfig {
 }
 
 // Input: Contact information as markdown content
-// Output: Styled contact section with description and icons
-export function Contact({ content }: { content: string }) {
+// Output: Styled contact section with description and icons.
+// compact: hide the description and lay the links out in a single icon row
+// (used on the trailhead hub).
+export function Contact({ content, compact = false }: { content: string, compact?: boolean }) {
   // Split content into description and contact links
   const lines = content.split('\n')
   const description = lines.filter(line => !line.trim().startsWith('-')).join('\n')
@@ -42,6 +44,54 @@ export function Contact({ content }: { content: string }) {
     },
   }
 
+  const links = contacts.map(({ type, value }) => {
+    const config = contactConfig[type]
+    if (!config) return null
+
+    const Icon = config.icon
+    const href = config.href(value)
+    const externalProps = config.external ? {
+      target: "_blank",
+      rel: "noopener noreferrer"
+    } : {}
+
+    if (compact) {
+      return (
+        <a
+          key={type}
+          href={href}
+          aria-label={type}
+          title={value}
+          className="text-tui-cyan hover:text-tui-fg transition-colors"
+          {...externalProps}
+        >
+          <Icon className="h-5 w-5" />
+        </a>
+      )
+    }
+
+    return (
+      <div key={type} className="flex items-center gap-2 font-mono text-sm">
+        <Icon className="h-4 w-4 text-tui-cyan" />
+        <a
+          href={href}
+          className="text-tui-fg hover:text-tui-cyan transition-colors"
+          {...externalProps}
+        >
+          {value}
+        </a>
+      </div>
+    )
+  })
+
+  if (compact) {
+    return (
+      <div className="flex items-center justify-center gap-6" style={{ padding: '0.5rem 0' }}>
+        {links}
+      </div>
+    )
+  }
+
   return (
     <div className="flex flex-col gap-8" style={{ padding: '1rem 0' }}>
       <div className="max-w-none pt-6 react-markdown">
@@ -49,30 +99,7 @@ export function Contact({ content }: { content: string }) {
       </div>
 
       <div className="flex flex-col gap-4 pt-4">
-        {contacts.map(({ type, value }) => {
-          const config = contactConfig[type]
-          if (!config) return null
-
-          const Icon = config.icon
-          const href = config.href(value)
-          const externalProps = config.external ? {
-            target: "_blank",
-            rel: "noopener noreferrer"
-          } : {}
-
-          return (
-            <div key={type} className="flex items-center gap-2 font-mono text-sm">
-              <Icon className="h-4 w-4 text-tui-cyan" />
-              <a
-                href={href}
-                className="text-tui-fg hover:text-tui-cyan transition-colors"
-                {...externalProps}
-              >
-                {value}
-              </a>
-            </div>
-          )
-        })}
+        {links}
       </div>
     </div>
   )

@@ -26,10 +26,14 @@ export function TopBar({ tuiMode, onToggleMode }: Pick<StatusBarsProps, "tuiMode
   return (
     <header className={styles.topBar}>
       <div className={styles.topLeft}>
-        <span className={styles.brand}>▽</span>
-        <span className={styles.brandName}>mads</span>
+        <Link href="/" className={styles.brandLink}>
+          <span className={styles.brand}>▽</span>
+          <span className={styles.brandName}>mads</span>
+        </Link>
         <span className={styles.separator}>|</span>
-        <Link href="/" className={styles.info}>portfolio</Link>
+        <Link href="/portfolio" className={styles.info}>work</Link>
+        <span className={styles.separator}>|</span>
+        <Link href="/me" className={styles.info}>about</Link>
         <span className={styles.separator}>|</span>
         <Link href="/writing" className={styles.info}>writing</Link>
       </div>

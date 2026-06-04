@@ -1,0 +1,42 @@
+/* Shared TUI shell for the hub / portfolio / personal routes. */
+
+.container {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+}
+
+/* Main column when a fixed 16rem TuiSidebar is present. */
+.mainWithSidebar {
+  flex: 1;
+  max-width: calc(100% - 16rem);
+  margin-left: auto;
+  width: 100%;
+  padding: 24px 0; /* clear the fixed top/bottom bars */
+}
+
+@media (max-width: 768px) {
+  .mainWithSidebar {
+    max-width: 100%;
+    margin-left: 0;
+    padding: 24px 0.25rem;
+  }
+}
+
+/* Centered column for the sidebar-less trailhead hub. */
+.mainCentered {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 48px 1.5rem;
+}

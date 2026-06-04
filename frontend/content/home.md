@@ -1,6 +1,3 @@
-# Joseph Madigan
+`systems & tools craftsperson`
 
-Scroll down or use the nav links to explore! 
-
-`some small peeks into my life...`
-
+I build local-first software: terminal UIs, peer-to-peer systems, and developer tools, mostly in Rust.

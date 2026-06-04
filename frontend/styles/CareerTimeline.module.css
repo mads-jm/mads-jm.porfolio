@@ -1,0 +1,249 @@
+/* Two-column career view: work spine (left) + overlapping edu lane (right).
+   Monospace TUI styling, matches the site palette. */
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 12rem;
+  column-gap: 1.75rem;
+  margin: 1rem 0 0;
+  font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+}
+
+.colHead {
+  align-self: end;
+  color: hsl(var(--tui-yellow));
+  font-size: 0.8rem;
+  padding-bottom: 0.4rem;
+  margin-bottom: 0.6rem;
+  border-bottom: 1px solid hsl(var(--tui-dark-gray));
+}
+.colHead::before { content: "~/"; color: hsl(var(--tui-gray)); }
+
+/* --- Work spine --- */
+.node {
+  position: relative;
+  padding: 0 0 1.75rem 1.75rem;
+  border-left: 1px solid hsl(var(--tui-dark-gray));
+  margin-left: 0.4rem;
+}
+
+/* Trim the trailing spine below the last work node. */
+.node[data-last] { border-left-color: transparent; }
+
+.node::before {
+  content: "";
+  position: absolute;
+  left: -5px;
+  top: 0.35rem;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: hsl(var(--tui-bg));
+  border: 1px solid hsl(var(--tui-gray));
+}
+
+/* Current role: filled, brighter dot. */
+.node[data-current]::before {
+  background: hsl(var(--tui-cyan));
+  border-color: hsl(var(--tui-cyan));
+  box-shadow: 0 0 0 3px hsl(var(--tui-cyan) / 0.18);
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.6rem;
+}
+
+.role {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: hsl(var(--tui-fg));
+}
+
+.meta {
+  margin: 0;
+  font-size: 0.82rem;
+  color: hsl(var(--tui-gray));
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+
+.org { color: hsl(var(--tui-cyan)); }
+.dotSep { color: hsl(var(--tui-dark-gray)); }
+.date { color: hsl(var(--tui-gray)); }
+
+.blurb {
+  margin: 0.4rem 0 0;
+  color: hsl(var(--tui-gray));
+  font-size: 0.9rem;
+  line-height: 1.5;
+  max-width: 62ch;
+}
+
+.stat {
+  margin: 0.3rem 0 0;
+  color: hsl(var(--tui-yellow));
+  font-size: 0.78rem;
+}
+
+/* --- Checkpoints --- */
+.checkpoints {
+  list-style: none;
+  margin: 0.85rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.checkpoint {
+  border-left: 2px solid hsl(var(--tui-dark-gray));
+  padding-left: 0.85rem;
+}
+.checkpoint:hover { border-left-color: hsl(var(--tui-cyan) / 0.6); }
+
+.cpToggle {
+  display: grid;
+  grid-template-columns: 1.1rem 1fr;
+  grid-template-areas:
+    "arrow title"
+    ".     summary";
+  align-items: baseline;
+  column-gap: 0.4rem;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 0.3rem 0;
+  margin: 0;
+  font: inherit;
+  cursor: pointer;
+  color: hsl(var(--tui-fg));
+}
+
+.cpArrow {
+  grid-area: arrow;
+  color: hsl(var(--tui-cyan));
+  font-size: 0.85rem;
+}
+
+.cpTitle {
+  grid-area: title;
+  color: hsl(var(--tui-fg));
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+.cpToggle:hover .cpTitle { color: hsl(var(--tui-cyan)); }
+
+.cpDate {
+  grid-area: title;
+  justify-self: end;
+  color: hsl(var(--tui-gray));
+  font-size: 0.75rem;
+}
+
+.cpSummary {
+  grid-area: summary;
+  color: hsl(var(--tui-gray));
+  font-size: 0.82rem;
+  line-height: 1.45;
+  margin-top: 0.1rem;
+}
+
+.detail {
+  list-style: none;
+  margin: 0.4rem 0 0.6rem;
+  padding: 0 0 0 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.detail li {
+  position: relative;
+  padding-left: 1rem;
+  color: hsl(var(--tui-gray));
+  font-size: 0.85rem;
+  line-height: 1.5;
+  max-width: 64ch;
+}
+
+.detail li::before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  color: hsl(var(--tui-cyan) / 0.7);
+}
+
+/* --- Education lane (right column) --- */
+.eduSeg {
+  position: relative;
+  margin: 0 0 1.75rem;
+  padding: 0.7rem 0 0.7rem 0.9rem;
+  border-left: 2px solid hsl(var(--tui-yellow) / 0.55);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Bracket caps so the lane reads as a span, not just a border. */
+.eduSeg::before,
+.eduSeg::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 0.55rem;
+  height: 2px;
+  background: hsl(var(--tui-yellow) / 0.55);
+}
+.eduSeg::before { top: 0; }
+.eduSeg::after { bottom: 0; }
+
+.eduDegree {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: hsl(var(--tui-fg));
+  line-height: 1.25;
+}
+.eduOrg {
+  margin: 0.2rem 0 0;
+  font-size: 0.8rem;
+  color: hsl(var(--tui-yellow));
+}
+.eduDate {
+  margin: 0.1rem 0 0;
+  font-size: 0.78rem;
+  color: hsl(var(--tui-gray));
+}
+.eduNote {
+  margin: 0.45rem 0 0;
+  font-size: 0.78rem;
+  color: hsl(var(--tui-gray));
+  font-style: italic;
+  line-height: 1.45;
+}
+
+/* --- Mobile: collapse to a single stacked column --- */
+@media (max-width: 768px) {
+  .layout {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .colHead {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+  .eduSeg {
+    margin-bottom: 0;
+    border-left-width: 2px;
+  }
+  .cpDate { display: none; }
+  .role { font-size: 1rem; }
+}

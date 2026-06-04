@@ -51,7 +51,7 @@ export function WritingLayout({ title, description, path, children }: WritingLay
 
       <nav className={`${styles.sidebar} ${mobileOpen ? styles.sidebarOpen : ""}`} aria-label="Writing navigation">
         <Link href="/" className={styles.backLink}>
-          {"<< portfolio"}
+          {"<< home"}
         </Link>
         <div className={styles.railHeading}>~/writing</div>
         <ul className={styles.railList}>

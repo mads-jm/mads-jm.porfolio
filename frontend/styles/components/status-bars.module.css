@@ -41,6 +41,13 @@
 }
 
 /* Brand */
+.brandLink {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
 .brand {
   color: hsl(var(--tui-cyan));
 }
