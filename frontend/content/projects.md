@@ -1,7 +1,7 @@
 # Projects
 
 ### WhatNext
-**A resilient, user-centric music management platform for musical permanence and deep collaboration**  
+**Local-first, peer-to-peer music sessions: shared queues your friends can join, stored as plain Markdown**  
 [View Docs](https://whtnxt.madigan.app/)  -  [View Code](https://github.com/mads-jm/WhatNext)  
 November 2025 - Ongoing  
 Stack: TypeScript | Electron | React | RxDB | LibP2P | WebRTC | Spotify API  
@@ -12,7 +12,7 @@ Stack: TypeScript | Electron | React | RxDB | LibP2P | WebRTC | Spotify API
 - Developed collaborative session features including co-host model, playback mutex, turn-taking, reactions, and presence indicators
 - Designed an import adapter architecture abstracting streaming services into a canonical format, with Spotify as the first adapter
 - Built a companion client enabling phone/browser session viewing alongside the desktop app
-- Storing all user data in plaintext Structured Markdown with YAML frontmatter for full data sovereignty and interoperability
+- Stored all user data as plain-text Markdown with YAML frontmatter, so it stays portable and fully owned by the user
 
 ### Pour
 **Terminal-Native Capture Tool with Mobile PWA Companion**  
@@ -74,7 +74,7 @@ Stack: TypeScript | Electron | React | Python | FastAPI | SQLite | aiosqlite
 
 ### EmailEssence
 **Email Productivity Tool — Capstone Project**  
-[View App](https://email.madigan.app/)   -   [View Code](https://github.com/EmailEssence/EmailEssence.github.io)  
+[View App](https://email.madigan.app/)  -  [View Code](https://github.com/EmailEssence/EmailEssence.github.io)  
 October 2024 - June 2025  
 Stack: JavaScript | Python | OpenRouter API  
 
@@ -87,7 +87,7 @@ Stack: JavaScript | Python | OpenRouter API
 
 ### ReverbXR
 **Web-based 3D/XR Audio Visualizer**  
-[View App](https://reverb-xr.madigan.app/)   -   [View Code](https://github.com/mads-jm/reverb-xr)  
+[View App](https://reverb-xr.madigan.app/)  -  [View Code](https://github.com/mads-jm/reverb-xr)  
 April 2024 - June 2024  
 Stack: HTML | JavaScript | Web Audio API  
 

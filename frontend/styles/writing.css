@@ -1,0 +1,107 @@
+/* Reading surface for the writing garden.
+   Body copy uses a comfortable reading stack in BOTH modes (readability first);
+   the tui <-> clean toggle shifts the palette (dark terminal vs light paper) and the
+   chrome. Headings and code keep the monospace character of the site. */
+
+.writing-prose {
+  font-family: ui-serif, Georgia, 'Times New Roman', serif;
+  font-size: 1.075rem;
+  line-height: 1.75;
+  color: hsl(var(--tui-fg));
+  max-width: 70ch;
+}
+
+.writing-prose p { margin: 0 0 1.25rem; }
+
+.writing-prose h1,
+.writing-prose h2,
+.writing-prose h3,
+.writing-prose h4 {
+  font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+  color: hsl(var(--tui-cyan));
+  line-height: 1.3;
+  margin: 2.25rem 0 0.85rem;
+}
+.writing-prose h1 { font-size: 1.6rem; }
+.writing-prose h2 { font-size: 1.3rem; }
+.writing-prose h3 { font-size: 1.1rem; }
+
+.writing-prose strong { color: hsl(var(--tui-fg)); font-weight: 700; }
+.writing-prose em { font-style: italic; }
+
+.writing-prose ul,
+.writing-prose ol { margin: 0 0 1.25rem; padding-left: 1.5rem; }
+.writing-prose li { margin-bottom: 0.4rem; }
+
+.writing-prose blockquote {
+  border-left: 3px solid hsl(var(--tui-cyan) / 0.5);
+  padding-left: 1rem;
+  margin: 0 0 1.25rem;
+  color: hsl(var(--tui-gray));
+  font-style: italic;
+}
+
+.writing-prose hr {
+  border: none;
+  border-top: 1px solid hsl(var(--tui-dark-gray));
+  margin: 2rem 0;
+}
+
+/* Links */
+.writing-link {
+  color: hsl(var(--tui-cyan));
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.writing-link:hover { opacity: 0.8; }
+
+/* Inline + block code (always monospace) */
+.writing-prose code {
+  font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+  font-size: 0.88em;
+  background: hsl(var(--tui-bg-alt));
+  color: hsl(var(--tui-cyan));
+  padding: 0.12em 0.4em;
+}
+.writing-prose pre {
+  font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+  background: hsl(var(--tui-bg-alt));
+  border: 1px solid hsl(var(--tui-dark-gray));
+  padding: 1rem;
+  overflow-x: auto;
+  margin: 0 0 1.25rem;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+.writing-prose pre code { background: none; color: hsl(var(--tui-fg)); padding: 0; }
+
+/* Images */
+.writing-img { max-width: 100%; height: auto; border: 1px solid hsl(var(--tui-dark-gray)); margin: 1rem 0; }
+
+/* Tables (remark-gfm) */
+.writing-prose table { width: 100%; border-collapse: collapse; margin: 0 0 1.25rem; font-size: 0.92rem; }
+.writing-prose th,
+.writing-prose td { border: 1px solid hsl(var(--tui-dark-gray)); padding: 0.4rem 0.6rem; text-align: left; }
+.writing-prose th { color: hsl(var(--tui-cyan)); }
+
+/* Obsidian callouts */
+.writing-callout {
+  border: 1px solid hsl(var(--tui-cyan) / 0.4);
+  border-left-width: 3px;
+  background: hsl(var(--tui-bg-alt));
+  padding: 0.85rem 1rem;
+  margin: 0 0 1.25rem;
+}
+.writing-callout-title {
+  font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: hsl(var(--tui-cyan));
+  margin-bottom: 0.4rem;
+}
+.writing-callout-body > :last-child { margin-bottom: 0; }
+.writing-callout[data-callout="warning"],
+.writing-callout[data-callout="caution"] { border-color: hsl(var(--tui-yellow) / 0.6); }
+.writing-callout[data-callout="warning"] .writing-callout-title,
+.writing-callout[data-callout="caution"] .writing-callout-title { color: hsl(var(--tui-yellow)); }

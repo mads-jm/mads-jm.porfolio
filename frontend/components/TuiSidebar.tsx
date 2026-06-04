@@ -1,19 +1,16 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from "react"
 import styles from "../styles/components/tui-sidebar.module.css"
 
-interface NavItem {
+export interface NavItem {
   label: string
   hash: string
   children?: { label: string; hash: string }[]
 }
 
-const NAV_ITEMS: NavItem[] = [
-  {
-    label: "home",
-    hash: "#home",
-    children: [{ label: "contact", hash: "#home" }],
-  },
-  { label: "about", hash: "#about" },
+// Default nav for the portfolio route: the projects index.
+export const PROJECT_NAV_ITEMS: NavItem[] = [
+  { label: "~", hash: "#overview" },
+  { label: "career", hash: "#career" },
   {
     label: "projects",
     hash: "#projects",
@@ -55,7 +52,21 @@ function flattenItems(items: NavItem[], expanded: Set<string>): FlatItem[] {
   return flat
 }
 
+// Unique section ids (sans leading #) referenced by a nav tree — used to wire
+// the IntersectionObserver so it always matches whatever nav the page supplies.
+function sectionIdsFor(items: NavItem[]): string[] {
+  const ids = new Set<string>()
+  for (const item of items) {
+    ids.add(item.hash.replace(/^#/, ""))
+    for (const child of item.children ?? []) {
+      ids.add(child.hash.replace(/^#/, ""))
+    }
+  }
+  return [...ids].filter(Boolean)
+}
+
 interface NavListProps {
+  navItems: NavItem[]
   flat: FlatItem[]
   activeHash: string
   focusIndex: number
@@ -64,14 +75,14 @@ interface NavListProps {
   onToggle: (label: string) => void
 }
 
-function NavList({ flat, activeHash, focusIndex, expanded, onNavigate, onToggle }: NavListProps) {
+function NavList({ navItems, flat, activeHash, focusIndex, expanded, onNavigate, onToggle }: NavListProps) {
   return (
     <ul className={styles.navList}>
       {flat.map((item, i) => {
         const isActive = activeHash === item.hash
         const isFocused = focusIndex === i
         const parentItem = !item.isChild
-          ? NAV_ITEMS.find((n) => n.label === item.label)
+          ? navItems.find((n) => n.label === item.label)
           : null
         const hasChildren = parentItem?.children && parentItem.children.length > 0
         const isExpanded = hasChildren && expanded.has(item.label)
@@ -138,18 +149,21 @@ function NavList({ flat, activeHash, focusIndex, expanded, onNavigate, onToggle 
 
 interface TuiSidebarProps {
   onActiveChange?: (hash: string) => void
+  navItems?: NavItem[]
 }
 
-export function TuiSidebar({ onActiveChange }: TuiSidebarProps = {}) {
-  const [activeHash, setActiveHash] = useState("#home")
-  const [expanded, setExpanded] = useState<Set<string>>(() => new Set(["projects"]))
+export function TuiSidebar({ onActiveChange, navItems = PROJECT_NAV_ITEMS }: TuiSidebarProps = {}) {
+  const [activeHash, setActiveHash] = useState(navItems[0]?.hash ?? "#")
+  const [expanded, setExpanded] = useState<Set<string>>(
+    () => new Set(navItems.filter((i) => i.children?.length).map((i) => i.label))
+  )
   const [focusIndex, setFocusIndex] = useState(0)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
   const navRef = useRef<HTMLElement>(null)
   const mobileNavRef = useRef<HTMLDivElement>(null)
 
-  const flat = useMemo(() => flattenItems(NAV_ITEMS, expanded), [expanded])
+  const flat = useMemo(() => flattenItems(navItems, expanded), [navItems, expanded])
 
   // Notify parent of active section changes
   useEffect(() => {
@@ -171,11 +185,7 @@ export function TuiSidebar({ onActiveChange }: TuiSidebarProps = {}) {
 
   // Track active section via IntersectionObserver
   useEffect(() => {
-    const sectionIds = [
-      "home", "about", "projects",
-      "projects-whatnext", "projects-pour", "projects-seed", "projects-git-identity",
-      "projects-emailessence", "projects-reverbxr",
-    ]
+    const sectionIds = sectionIdsFor(navItems)
     const sections = sectionIds
       .map((id) => document.getElementById(id))
       .filter(Boolean) as HTMLElement[]
@@ -216,7 +226,7 @@ export function TuiSidebar({ onActiveChange }: TuiSidebarProps = {}) {
 
     sections.forEach((s) => observer.observe(s))
     return () => observer.disconnect()
-  }, [])
+  }, [navItems])
 
   // Sync with hash changes
   useEffect(() => {
@@ -250,10 +260,12 @@ export function TuiSidebar({ onActiveChange }: TuiSidebarProps = {}) {
   }, [])
 
   // Refs for global keyboard handler (avoids re-registering listener on every state change)
+  const navItemsRef = useRef(navItems)
   const flatRef = useRef(flat)
   const focusIndexRef = useRef(focusIndex)
   const mobileOpenRef = useRef(mobileOpen)
   const isMobileRef = useRef(isMobile)
+  useEffect(() => { navItemsRef.current = navItems }, [navItems])
   useEffect(() => { flatRef.current = flat }, [flat])
   useEffect(() => { focusIndexRef.current = focusIndex }, [focusIndex])
   useEffect(() => { mobileOpenRef.current = mobileOpen }, [mobileOpen])
@@ -302,7 +314,7 @@ export function TuiSidebar({ onActiveChange }: TuiSidebarProps = {}) {
           // Only prevent default when focused on a nav item with children
           const item = currentFlat[currentIndex]
           if (item && !item.isChild) {
-            const parent = NAV_ITEMS.find((n) => n.label === item.label)
+            const parent = navItemsRef.current.find((n) => n.label === item.label)
             if (parent?.children) {
               e.preventDefault()
               setExpanded((prev) => {
@@ -330,6 +342,7 @@ export function TuiSidebar({ onActiveChange }: TuiSidebarProps = {}) {
   const sidebarContent = (
     <>
       <NavList
+        navItems={navItems}
         flat={flat}
         activeHash={activeHash}
         focusIndex={focusIndex}
@@ -375,6 +388,7 @@ export function TuiSidebar({ onActiveChange }: TuiSidebarProps = {}) {
         aria-label="Site navigation"
       >
         <NavList
+          navItems={navItems}
           flat={flat}
           activeHash={activeHash}
           focusIndex={focusIndex}

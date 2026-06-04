@@ -1,0 +1,120 @@
+/* Trailhead hub — a concise, linkable landing that routes both audiences. */
+
+.wrap {
+  max-width: 46rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
+  text-align: center;
+  font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.name {
+  font-size: clamp(2.25rem, 6vw, 3.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: hsl(var(--foreground));
+  margin: 0;
+}
+
+.handle {
+  margin-top: 0.35rem;
+  font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+  font-size: 1.05rem;
+  color: hsl(var(--tui-cyan));
+}
+
+.intro :global(code) {
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  color: hsl(var(--tui-yellow));
+  background: none;
+  padding: 0;
+}
+
+.intro :global(p) {
+  color: hsl(var(--tui-gray));
+  line-height: 1.6;
+  max-width: 38rem;
+  margin: 1rem auto 0;
+}
+
+/* Reach-out + contact, grouped tight so they read as one block. */
+.connect {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.reachOut {
+  margin: 0;
+  font-size: 0.9rem;
+  color: hsl(var(--tui-gray));
+}
+
+.kaomoji {
+  color: hsl(var(--tui-cyan));
+  white-space: nowrap;
+}
+
+/* Doors */
+.doors {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 34rem;
+}
+
+.door {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "label arrow"
+    "desc  arrow";
+  align-items: center;
+  gap: 0.1rem 1rem;
+  text-align: left;
+  text-decoration: none;
+  padding: 0.85rem 1.1rem;
+  border: 1px solid hsl(var(--tui-dark-gray));
+  background: hsl(var(--tui-bg-alt));
+  transition: border-color 0.15s, transform 0.15s;
+}
+
+.door:hover {
+  border-color: hsl(var(--tui-cyan));
+  transform: translateX(2px);
+}
+
+.doorLabel {
+  grid-area: label;
+  color: hsl(var(--tui-cyan));
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+.doorDesc {
+  grid-area: desc;
+  color: hsl(var(--tui-gray));
+  font-size: 0.82rem;
+}
+
+.doorArrow {
+  grid-area: arrow;
+  color: hsl(var(--tui-cyan));
+  font-size: 1.25rem;
+}
+
+@media (max-width: 768px) {
+  .wrap { gap: 2rem; }
+}
