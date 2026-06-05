@@ -46,18 +46,19 @@ Stack: Rust | tokio | ratatui | crossterm | interprocess | notify-rust | chrono
 - Designed a versioned wire schema where unknown event kinds round-trip via `Event::Unknown` so forward-compatible tooling never silently loses data
 - Modeled an OSRS-style 1-99 XP curve across nine wellness traits with SEED → ZENITH prestige tiers, driving mandala evolution from sparse seed to full bloom
 
-### git-identity
-**Cross-Platform Git Identity Manager with TUI and CLI**  
-[View Code](https://github.com/mads-jm/git-identity)  
+### graft
+**Cross-OS Dev Workspace Manager — Git Identity Routing + Build-Output Redirection**  
+[View Code](https://github.com/mads-jm/graft)  
 February 2026 - Ongoing  
 Stack: Rust | ratatui | crossterm | clap | serde | YAML  
 
-- Built a standalone TUI and CLI tool for managing multiple GitHub accounts with directory-based switching and SSH aliases
+- Built a standalone TUI and CLI tool (formerly git-identity) that manages cross-OS development workspaces from one YAML config — per-account git identity routing plus per-platform build-output redirection over a shared source tree
+- Generated `includeIf gitdir:` identity routing and `github.com-{alias}` SSH host blocks for juggling multiple GitHub accounts with directory-based switching
+- Added workspace links that redirect build output (`target/`, `node_modules/`, `.venv/`) off a shared NTFS partition onto each platform's native filesystem — real symlinks with a Windows directory-junction fallback when elevation isn't available
 - Implemented non-destructive config generation using a managed-block pattern that preserves user content in ~/.gitconfig and ~/.ssh/config
 - Designed a layered architecture separating pure business logic (core) from I/O, UI, and a consent-gated permissions system
-- Built an interactive TUI with ratatui featuring account management, health validation, and clone URL conversion screens
-- Engineered cross-platform support (Windows, macOS, Linux) with atomic file writes, backup creation, and dry-run mode
-- Created an interactive setup wizard for zero-friction onboarding of new machines
+- Engineered cross-platform support (Windows, macOS, Linux) with atomic file writes, backup creation, dry-run mode, and a per-machine `config.local.yaml` overlay for host-specific paths
+- Shipped `graft path` so scripts can resolve the correct source tree per host, plus an interactive setup wizard for zero-friction onboarding of new machines
 
 ### Digest
 **Local-First AI Email Summarizer**  

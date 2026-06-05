@@ -12,8 +12,7 @@ interface ShowcaseItem {
   type?: 'image' | 'spotify'
 }
 
-// Per-project media. Flagship Rust projects (Pour, seed, git-identity) have empty
-// arrays — the layout is ready; screenshots get dropped in here later.
+// Per-project media, keyed by project name.
 const projectImages: Record<string, ShowcaseItem[]> = {
   'EmailEssence': [
     { src: 'https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjkyi1uoTKvHl3Yc6iN4UeChxIdMXsOJLnf0tP', alt: 'EmailEssence Dashboard', type: 'image' },
@@ -28,9 +27,17 @@ const projectImages: Record<string, ShowcaseItem[]> = {
     { src: 'https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNj8dTvhqGaSOBD9ZzAXdiosC5GunQHKYNbFJ1R', alt: 'ReverbXR v1', type: 'image' },
     { src: 'https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjWVxqg04upgRSyMNarcl0H3nB1tjEIfLoexVY', alt: 'ReverbXR 2D Prototype', type: 'image' },
   ],
-  'Pour': [],
-  'seed': [],
-  'git-identity': [],
+  'Pour': [
+    { src: 'https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjDm3hJV688EeysQgC40iatZnGSrK2YNLJAR7O', alt: 'Pour TUI capture view', type: 'image' },
+    { src: 'https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNj520LxHijBSYdczlmT0NyQICt4hJoMFPDaHnX', alt: 'Pour TUI module flow', type: 'image' },
+    { src: 'https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNju7wUhAI0cIjg3BZdiJowSTfR8rl9WGL6m2b1', alt: 'Pour mobile PWA companion', type: 'image' },
+  ],
+  'seed': [
+    { src: 'https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNj6fCSy7FBsOb02EPfZWgp5NdXnY1VyjtCcRkG', alt: 'seed TUI with generative mandala', type: 'image' },
+  ],
+  'graft': [
+    { src: 'https://f9y2nv7uff.ufs.sh/f/nkgLo6uKBuNjTC4JK2iUAV7FfvaSR63EX5YU8PbN9IZgLnrW', alt: 'graft TUI', type: 'image' },
+  ],
   'WhatNext': [
     { src: 'https://open.spotify.com/embed/playlist/2kpswjk4hzWHQwpci2PUnc?utm_source=generator', alt: 'WhatNext Playlist 1', type: 'spotify' },
     { src: 'https://open.spotify.com/embed/playlist/6KgZCaJ94sVwCVZiOt1ToE?utm_source=generator', alt: 'WhatNext Playlist 2', type: 'spotify' },
@@ -42,7 +49,7 @@ const projectImages: Record<string, ShowcaseItem[]> = {
 }
 
 // TUI apps — small dark glyphs
-const tuiIcons = new Set(["Pour", "seed", "git-identity"])
+const tuiIcons = new Set(["Pour", "seed", "graft"])
 
 interface ProjectShowcaseProps {
   intro: string
