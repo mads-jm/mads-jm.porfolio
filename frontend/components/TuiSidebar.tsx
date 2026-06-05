@@ -18,7 +18,7 @@ export const PROJECT_NAV_ITEMS: NavItem[] = [
       { label: "whatnext", hash: "#projects-whatnext" },
       { label: "pour", hash: "#projects-pour" },
       { label: "seed", hash: "#projects-seed" },
-      { label: "git-identity", hash: "#projects-git-identity" },
+      { label: "graft", hash: "#projects-graft" },
       { label: "digest", hash: "#projects-digest" },
       { label: "emailessence", hash: "#projects-emailessence" },
       { label: "reverbxr", hash: "#projects-reverbxr" },

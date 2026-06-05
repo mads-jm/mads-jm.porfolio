@@ -54,7 +54,7 @@ export function TopBar({ tuiMode, onToggleMode }: Pick<StatusBarsProps, "tuiMode
 }
 
 export function BottomBar({ activeSection }: Pick<StatusBarsProps, "activeSection">) {
-  // Convert hash to display path: #projects-git-identity → ~/projects/git-identity
+  // Convert hash to display path: #projects-graft → ~/projects/graft
   const sectionPath = activeSection
     .replace("#", "~/")
     .replace(/-/, "/")
