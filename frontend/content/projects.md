@@ -1,5 +1,7 @@
 # Projects
 
+Open source, linked, and documented. Nearly everything here chases the same idea: files you own, tools that get out of the way.
+
 ### WhatNext
 **Local-first, peer-to-peer music sessions: shared queues your friends can join, stored as plain Markdown**  
 [View Docs](https://whtnxt.madigan.app/)  -  [View Code](https://github.com/mads-jm/WhatNext)  
@@ -79,7 +81,7 @@ Stack: TypeScript | Electron | React | Python | FastAPI | SQLite | aiosqlite
 October 2024 - June 2025  
 Stack: JavaScript | Python | OpenRouter API  
 
-- Architected a modular backend with clear separation between routers, services, and providers, following SOLID principles
+- Architected a modular backend with clear separation between routers, services, and providers
 - Built IMAP email service with parsing and reader view capabilities
 - Implemented Google OAuth with token validation endpoints
 - Designed abstract AI summarization service supporting multiple providers

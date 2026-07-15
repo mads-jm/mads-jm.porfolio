@@ -35,7 +35,7 @@ const Hub: NextPage<HubProps> = ({ intro, contact }) => {
   return (
     <SiteLayout
       title="mads | systems & tools craftsperson"
-      description="I build local-first software: terminal UIs, peer-to-peer systems, and developer tools, mostly in Rust."
+      description="I build software where the files outlive the app: terminal UIs, peer-to-peer systems, and developer tools in Rust — and by day, a local-first desktop AI app at EdgeRunner AI."
       path="/"
       jsonLd={personJsonLd}
     >
